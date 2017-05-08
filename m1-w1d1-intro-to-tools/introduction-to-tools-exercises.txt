@@ -38,7 +38,7 @@ My home directory.
 ----
 
 $ pwd
-<type or copy-paste the result here>
+/Users/qcollins
 
 The present working directory displayed should match the directory you changed 
 to in Exercise 1.  Note, the two may not match at the very beginning if you
@@ -54,7 +54,26 @@ changes directory, and the "pwd" command reflects this.
 ----
 
 $ ls -la
-<type or copy-paste the result here>
+total 56
+drwxr-xr-x+ 19 qcollins  staff    646 May  8 15:16 .
+drwxr-xr-x   6 root      admin    204 Apr 26 10:01 ..
+-r--------   1 qcollins  staff      7 Apr 26 10:02 .CFUserTextEncoding
+-rw-r--r--@  1 qcollins  staff  10244 May  8 13:45 .DS_Store
+drwx------   8 qcollins  staff    272 May  8 13:52 .Trash
+-rw-------   1 qcollins  staff     42 May  8 13:27 .bash_history
+drwx------  12 qcollins  staff    408 May  8 13:55 .bash_sessions
+-rw-r--r--   1 qcollins  staff    116 May  8 15:16 .gitconfig
+-rw-r--r--@  1 qcollins  staff     72 May  8 15:08 .gitignore-global
+drwx------@  3 qcollins  staff    102 May  8 13:17 Applications
+drwx------+  5 qcollins  staff    170 May  8 14:09 Desktop
+drwxr-xr-x   5 qcollins  staff    170 May  8 14:29 Development
+drwx------+  3 qcollins  staff    102 Apr 26 10:01 Documents
+drwx------+  5 qcollins  staff    170 May  8 15:08 Downloads
+drwx------@ 54 qcollins  staff   1836 May  8 13:20 Library
+drwx------+  3 qcollins  staff    102 Apr 26 10:01 Movies
+drwx------+  3 qcollins  staff    102 Apr 26 10:01 Music
+drwx------+  3 qcollins  staff    102 Apr 26 10:01 Pictures
+drwxr-xr-x+  5 qcollins  staff    170 Apr 26 10:01 Public
 
 
 ----
@@ -62,14 +81,14 @@ $ ls -la
     Exercise 4 represent?
 ----
 
-<type or copy-paste your answer here>
+A single "." represents the current directory you're working in. Two or ".." represents the directory above the one you're working in.
 
 ----
 6.  What are the names of the files, including any dot-files, displayed in the
     directory listing in Exercise 4?
 ----
 
-<type or copy-paste your answer here>
+pom.xml
 
 
 ----
@@ -77,7 +96,10 @@ $ ls -la
     the directory listing in Exercise 4?
 ----
 
-<type or copy-paste your answer here>
+drwxr-xr-x  5 qcollins  staff   170 May  8 14:46 .
+drwxr-xr-x  4 qcollins  staff   136 May  8 14:46 ..
+drwxr-xr-x  3 qcollins  staff   102 May  8 14:46 database
+drwxr-xr-x  4 qcollins  staff   136 May  8 14:46 src
 
 
 ----
