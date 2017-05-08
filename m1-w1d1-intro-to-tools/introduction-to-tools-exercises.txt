@@ -246,16 +246,38 @@ $ <enter command to list all files and folders in order to confirm the renaming 
 ----
 
 $ <enter the Git command to display status>
-<type or copy-paste the result here>
+On branch master
+Your branch is ahead of 'origin/master' by 1 commit.
+  (use "git push" to publish your local commits)
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	modified:   ../../../../../../introduction-to-tools-exercises.txt
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+
+	Helloworld.java.copy
+
+no changes added to commit (use "git add" and/or "git commit -a")
 
 $ <enter the Git command to "stage" all changes>
-<type or copy-paste the result here>
+I used git add -A to stage all the files I made changes to. Because it was successful, it showed no changes in terminal and presented me with a prompt to continue entering commands.
 
 $ <enter the Git command to save all "staged" changes>
-<type or copy-paste the result here>
+[master b1f304a] Added a major feature (answered questions in homework)
+ 2 files changed, 47 insertions(+), 12 deletions(-)
+ create mode 100755 m1-w1d1-intro-to-tools/java-helloworld/src/main/java/com/techelevator/Helloworld.java.copy
 
 $ git push
-<type or copy-paste the result here>
+Counting objects: 14, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (10/10), done.
+Writing objects: 100% (14/14), 2.29 KiB | 0 bytes/s, done.
+Total 14 (delta 3), reused 0 (delta 0)
+To https://bitbucket.org/te-cbus-cohort-2/quinncollins-java-exercises.git
+   844320d..b1f304a  master -> master
 
 
 ----
@@ -267,7 +289,7 @@ $ rm Helloworld.java.copy
 The "rm" parameter is the name of the file to be deleted.
 
 $ <enter command to list all files and folders in order to confirm the file deletion>
-<type or copy-paste the result here>
+Entered command, no return because it was successful.
 
 
 ----
@@ -289,7 +311,7 @@ command line when that seems natural.
 Regardless of the option you chose, check your new location.
 
 $ <enter command to display present working directory>
-<type or copy-paste your present working directory here>
+/Users/qcollins/Development/workspaces/quinncollins-java-exercises/m1-w1d1-intro-to-tools/java-helloworld
 
 
 ----
@@ -300,7 +322,7 @@ $ <enter command to display present working directory>
 $ mkdir docs
 $ <enter the command to change directory to "docs" using a relative path>
 $ <enter command to display present working directory>
-<type or copy-paste your present working directory here>
+/Users/qcollins/Development/workspaces/quinncollins-java-exercises/m1-w1d1-intro-to-tools/java-helloworld/docs
 
 ----
 19. Create a new file name "readme.txt" using Visual Studio Code, and add the text
@@ -310,7 +332,7 @@ $ <enter command to display present working directory>
 $ code readme.txt
 
 Don't forget to save the file in Text Mate!
-
+I used "mate readme.txt" command and then added the text into the text editor and saved. I hope this is ok, if not can you explain what I was supposed to do please?
 
 ----
 20. As a final exercise, please perform the following commands to save and push your 
