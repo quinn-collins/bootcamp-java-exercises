@@ -88,7 +88,11 @@ A single "." represents the current directory you're working in. Two or ".." rep
     directory listing in Exercise 4?
 ----
 
-pom.xml
+-r--------   1 qcollins  staff      7 Apr 26 10:02 .CFUserTextEncoding
+-rw-r--r--@  1 qcollins  staff  10244 May  8 13:45 .DS_Store
+-rw-------   1 qcollins  staff     42 May  8 13:27 .bash_history
+-rw-r--r--   1 qcollins  staff    116 May  8 15:16 .gitconfig
+-rw-r--r--@  1 qcollins  staff     72 May  8 15:08 .gitignore-global
 
 
 ----
@@ -96,10 +100,20 @@ pom.xml
     the directory listing in Exercise 4?
 ----
 
-drwxr-xr-x  5 qcollins  staff   170 May  8 14:46 .
-drwxr-xr-x  4 qcollins  staff   136 May  8 14:46 ..
-drwxr-xr-x  3 qcollins  staff   102 May  8 14:46 database
-drwxr-xr-x  4 qcollins  staff   136 May  8 14:46 src
+drwxr-xr-x+ 19 qcollins  staff    646 May  8 15:16 .
+drwxr-xr-x   6 root      admin    204 Apr 26 10:01 ..
+drwx------   8 qcollins  staff    272 May  8 13:52 .Trash
+drwx------  12 qcollins  staff    408 May  8 13:55 .bash_sessions
+drwx------@  3 qcollins  staff    102 May  8 13:17 Applications
+drwx------+  5 qcollins  staff    170 May  8 14:09 Desktop
+drwxr-xr-x   5 qcollins  staff    170 May  8 14:29 Development
+drwx------+  3 qcollins  staff    102 Apr 26 10:01 Documents
+drwx------+  5 qcollins  staff    170 May  8 15:08 Downloads
+drwx------@ 54 qcollins  staff   1836 May  8 13:20 Library
+drwx------+  3 qcollins  staff    102 Apr 26 10:01 Movies
+drwx------+  3 qcollins  staff    102 Apr 26 10:01 Music
+drwx------+  3 qcollins  staff    102 Apr 26 10:01 Pictures
+drwxr-xr-x+  5 qcollins  staff    170 Apr 26 10:01 Public
 
 
 ----
@@ -145,10 +159,19 @@ You are encouraged to make "less" part of your standard command line toolkit.
 Did you remember to save "m1-introduction-to-tools-exercise.txt"?
 
 $ git status
-<type or copy-paste the result here>
+
+On branch master
+Your branch is up-to-date with 'origin/master'.
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+	modified:   ../introduction-to-tools-exercises.txt
+
+no changes added to commit (use "git add" and/or "git commit -a")
 
 $ git add .
-<type or copy-paste the result here>
+Successful. No test.
 
 $ git commit -m "Good stopping point"
 <type or copy-paste the result here>
@@ -165,7 +188,7 @@ BitBucket when a feature, fix, or in this case, assignment is finished.
 
 $ cd src/main/java/com/techelevator
 $ <enter command to display present working directory>
-<type or copy-paste your present working directory here>
+/Users/qcollins/Development/workspaces/quinncollins-java-exercises/m1-w1d1-intro-to-tools/java-helloworld/src/main/java/com/techelevator
 
 
 ----
@@ -173,7 +196,7 @@ $ <enter command to display present working directory>
     path?
 ----
 
-<type your answer here>
+Because it shows the full path, I believe it uses an absolute path in this case. rather than starting with /../
 
 
 ----
@@ -182,7 +205,9 @@ $ <enter command to display present working directory>
 ----
 
 $ <enter command to list all files and folders including dot-files and dot-folders>
-<type or copy-paste the result here>
+drwxr-xr-x  3 qcollins  staff  102 May  8 14:46 .
+drwxr-xr-x  3 qcollins  staff  102 May  8 14:46 ..
+-rwxr-xr-x  1 qcollins  staff  141 May  8 14:46 Helloworld.java
 
 
 ----
@@ -197,7 +222,7 @@ The "cp" parameters are the name of the source file followed by the name of the
 destination file. 
 
 $ <enter command to list all files and folders in order to confirm the creation of the backup file>
-<type or copy-paste the result here>
+la -a
 
 
 ----    
@@ -211,7 +236,8 @@ The "mv" parameters are the existing name of the file followed by the new name
 of the file. 
 
 $ <enter command to list all files and folders in order to confirm the renaming of the file>
-<type or copy-paste the result here>
+.			Helloworld.java
+..			Helloworld.java.copy
 
 
 ----
