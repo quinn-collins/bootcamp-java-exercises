@@ -10,7 +10,10 @@ public class Exercises {
 	 firstLast6([13, 6, 1, 2, 3]) → false
 	 */
 	public boolean firstLast6(int[] nums) {
-		return false;
+		boolean firstIsSix = nums[0] == 6;
+		boolean lastIsSix = nums[nums.length-1] == 6;
+		
+		return firstIsSix || lastIsSix;
 	}
 
 	/*
@@ -21,7 +24,12 @@ public class Exercises {
 	 sameFirstLast([1, 2, 1]) → true
 	 */
 	public boolean sameFirstLast(int[] nums) {
-		return false;
+		if(nums.length < 1) {
+			return false;
+		}
+		else {
+			return nums[0] == nums[nums.length-1];
+		}
 	}
 
 	/*
@@ -29,7 +37,7 @@ public class Exercises {
 	 makePi() → [3, 1, 4]
 	 */
 	public int[] makePi() {
-		return new int[] {};
+		return new int[] {3, 1, 4};
 	}
 
 	/*
@@ -40,7 +48,9 @@ public class Exercises {
 	 commonEnd([1, 2, 3], [1, 3]) → true
 	 */
 	public boolean commonEnd(int[] a, int[] b) {
-		return false;
+		boolean firstElement = a[0] == b[0];
+		boolean lastElement = a[a.length-1] == b[b.length-1];
+		return firstElement || lastElement;
 	}
 
 	/*
@@ -50,7 +60,9 @@ public class Exercises {
 	 sum3([7, 0, 0]) → 7
 	 */
 	public int sum3(int[] nums) {
-		return 0;
+		
+		return nums[0] + nums[1] + nums[2];
+		
 	}
 
 	/*
@@ -61,7 +73,7 @@ public class Exercises {
 	 rotateLeft3([7, 0, 0]) → [0, 0, 7]
 	 */
 	public int[] rotateLeft3(int[] nums) {
-		return new int[] {};
+		return new int[] {nums [1], nums[2], nums[0]};
 	}
 
 	/*
@@ -72,7 +84,7 @@ public class Exercises {
 	 reverse3([7, 0, 0]) → [0, 0, 7]
 	 */
 	public int[] reverse3(int[] nums) {
-		return new int[] {};
+		return new int[] {nums[2], nums[1], nums[0]};
 	}
 
 	/*
@@ -83,7 +95,16 @@ public class Exercises {
 	 maxEnd3([2, 11, 3]) → [3, 3, 3]
 	 */
 	public int[] maxEnd3(int[] nums) {
-		return new int[] {};
+		if (nums[0] >= nums[2]) {
+			nums[2] = nums[0];
+			nums[1] = nums[0];
+		}
+		else {
+			nums[0] = nums[2];
+			nums[1] = nums[2];
+		}
+		
+		return new int[] {nums[0], nums[1], nums[2]};
 	}
 
 	/*
@@ -94,7 +115,12 @@ public class Exercises {
 	 sum2([1, 1, 1, 1]) → 2
 	 */
 	public int sum2(int[] nums) {
-		return 0;
+		if (nums.length == 0) {
+			return 0;
+		}
+		else {
+			return nums[0] + nums[1];
+		}
 	}
 
 	/*
@@ -105,7 +131,7 @@ public class Exercises {
 	 middleWay([5, 2, 9], [1, 4, 5]) → [2, 4]
 	 */
 	public int[] middleWay(int[] a, int[] b) {
-		return new int[] {};
+		return new int[] {a[1], b[1]};
 	}
 
 	/*
@@ -116,7 +142,13 @@ public class Exercises {
 	 countEvens([1, 3, 5]) → 0
 	 */
 	public int countEvens(int[] nums) {
-		return 0;
+		int evenInts = 0;
+		for(int i = 0; i < nums.length; i++) {
+			if (nums[i] % 2 == 0) {
+				evenInts += 1;
+			}
+		}
+		return evenInts;
 	}
 
 	/*
@@ -128,7 +160,16 @@ public class Exercises {
 	 sum13([1, 2, 2, 1, 13]) → 6
 	 */
 	public int sum13(int[] nums) {
-		return 0;
+		int sum = 0;
+		if(nums[0] != 13) {
+			sum += nums[0];
+		}
+		for(int i = 1; i < nums.length; i++) {
+			if(nums[i] != 13 && nums[i-1] != 13) {
+				sum += nums[i];
+			}
+		}
+		return sum;
 	}
 
 	/*
@@ -138,6 +179,11 @@ public class Exercises {
 	 has22([2, 1, 2]) → false
 	 */
 	public boolean has22(int[] nums) {
+		for (int i = 0; i < nums.length - 1; i++){
+			if(nums[i] == 2 && nums[i+1] == 2) {
+				return true;
+			}
+		}
 		return false;
 	}
 	
@@ -148,7 +194,14 @@ public class Exercises {
 	 lucky13([1, 2, 4]) → false
 	 */
 	public boolean lucky13(int[] nums) {
-		return false;
+		boolean is1or3 = false;
+		for(int i = 0; i < nums.length; i++){
+			is1or3 = nums[i] == 1 || nums[i] == 3;
+			if (is1or3) {
+				break;
+			}
+		}
+		return !is1or3;
 	}
 
 	/*
@@ -158,7 +211,17 @@ public class Exercises {
 	 sum28([1, 2, 3, 4]) → false
 	 */
 	public boolean sum28(int[] nums) {
-		return false;
+		int sum = 0;
+		boolean eight = false;
+		for(int i = 0; i < nums.length; i++){
+			if(nums[i] == 2){
+				sum += 2;
+			}
+		}
+		if (sum == 8) {
+			eight = true;
+		}
+		return eight;
 	}
 
 }
