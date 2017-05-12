@@ -16,9 +16,23 @@ Enter a series of Earth weights (space-separated): 98 235 185
  235 lbs. on Earth, is 88 lbs. on Mars.
  185 lbs. on Earth, is 69 lbs. on Mars. 
  */
+
+import java.util.Scanner;
+
 public class MartianWeight {
 
 	public static void main(String[] args) {
+		Scanner input = new Scanner(System.in);
+		
+		double earthWeight, martianWeight;
+		
+		System.out.println("Enter a Earth weight:");
+		earthWeight = input.nextDouble();
+		
+		martianWeight = earthWeight * 0.378;
+		
+		System.out.println((int)(earthWeight) + " lbs. on Earth, is " + (int)(martianWeight) + " lbs. on Mars.");
+	
 
 	}
 
