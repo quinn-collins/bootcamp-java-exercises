@@ -37,7 +37,8 @@ public class Exercises {
 	 list2Array( ["Left", "Right", "Forward", "Back"] )  ->  {"Left", "Right", "Forward", "Back"}
 	 */
 	public String[] list2Array(List<String> stringList) {
-		return null;
+		String[] stringArray = stringList.toArray(new String [0]);
+		return stringArray;
 	}
 	
 	/*
@@ -88,7 +89,11 @@ public class Exercises {
 	 arrayInt2ListDouble( {84, 99, 3285, 13, 877} ) -> [42, 49.5, 1642.5, 6.5, 438.5]
 	 */
 	public List<Double> arrayInt2ListDouble(int[] intArray) {
-		return null;
+		List<Double> doubleList = new ArrayList<Double>();
+		for(double value : intArray) {
+			doubleList.add(value/2);
+		}
+		return doubleList;
 	}
 	
 	/*
@@ -98,7 +103,14 @@ public class Exercises {
 	 findLargest( [34070, 1380, 81238, 7782, 234, 64362, 627] ) -> 64362
 	 */
 	public Integer findLargest(List<Integer> integerList) {
-		return null;
+		
+		int temp = 0;
+		for(int value : integerList){
+			if(value > temp){
+				temp = value;
+			}
+		}
+		return temp;
 	}
 	
 	/*
@@ -108,7 +120,16 @@ public class Exercises {
 	 oddOnly( {734, 233, 782, 811, 3, 9999} ) -> [233, 811, 3, 9999]  
 	 */
 	public List<Integer> oddOnly(Integer[] integerArray) {
-		return null;
+		List<Integer> listOfIntegers = new ArrayList<Integer>();
+		
+		for(int value : integerArray) {
+			if(value % 2 == 0){
+			}
+			else{
+				listOfIntegers.add(value);
+			}
+		}
+		return listOfIntegers;
 	}
 	
 	/* 
@@ -119,6 +140,15 @@ public class Exercises {
 	 foundIntTwice( [9, 23, 44, 2, 88, 44], 44) -> true
 	 */
 	public boolean foundIntTwice(List<Integer> integerList, int intToFind) {
+		int count = 0;
+		for(int value : integerList) {
+			if(value == intToFind) {
+				count++;
+			}
+		}
+		if (count >= 2){
+			return true;
+		}
 		return false;
 	}
 	
@@ -135,7 +165,23 @@ public class Exercises {
 	 HINT: To convert an integer x to a string you can call x.toString() in your code (e.g. if x = 1 then x.ToString() equals "1")
 	 */
 	public List<String> fizzBuzzList(Integer[] integerArray) {
-		return null;
+		List<String> fizzBuzzAdded = new ArrayList<String>();
+		for(int value : integerArray) {
+			if(value % 3 == 0 && value % 5 == 0){
+				fizzBuzzAdded.add("FizzBuzz");
+			}
+			else if(value % 3 == 0) {
+				fizzBuzzAdded.add("Fizz");
+			}
+			else if(value % 5 == 0) {
+				fizzBuzzAdded.add("Buzz");
+			}
+			else{
+				String x = Integer.toString(value);
+				fizzBuzzAdded.add(x);
+			}
+		}
+		return fizzBuzzAdded;
 	}
 
 	/*
@@ -145,7 +191,16 @@ public class Exercises {
 	 distinctValues( ["jingle", "bells", "jingle", "bells", "jingle", "all", "the", "way"] ) -> ["jingle", "bells", "all", "the", "way"]
 	 */
 	public List<String> distinctValues(List<String> stringList) {
-		return null;
+		HashSet<String> hashOfValues = new HashSet<String>();
+		for(String value : stringList) {
+			hashOfValues.add(value);
+		}
+		List<String> listOfValues = new ArrayList<String>();
+		for(String value : hashOfValues) {
+			listOfValues.add(value);
+		}
+		return listOfValues;
+		
 	}
 
 	/*
@@ -156,7 +211,27 @@ public class Exercises {
 	 interleaveLists( [1, 2, 3], [4, 5, 6] )  ->  [1, 4, 2, 5, 3, 6]
 	 */
 	public List<Integer> interleaveLists(List<Integer> listOne, List<Integer> listTwo) {
-		return null;
+		List<Integer> interWeaved = new ArrayList<Integer>();
+		int maxLength;
+		if(listOne.size() > listTwo.size()){
+			maxLength = listOne.size();
+		}
+		else if(listTwo.size() > listOne.size()){
+			maxLength = listTwo.size();
+		}
+		else {
+			maxLength = listOne.size();
+		}
+		for(int i = 0; i < maxLength; i++) {
+			if(i<listOne.size()){
+				interWeaved.add(listOne.get(i));
+			}
+			if(i<listTwo.size()){
+				interWeaved.add(listTwo.get(i));
+			}
+			
+		}
+		return interWeaved;
 	}
 
 	/*
@@ -169,7 +244,23 @@ public class Exercises {
 	 boardingGate( [0, -1, 44, 31, 17, 7, 27, 16, 26, 6] ) -> [7, 6, 17, 16, 27, 26]
 	 */
 	public List<Integer> boardingGate(List<Integer> seatNumberList) {
-		return null;
+		List<Integer> zoneOne = new ArrayList<Integer>();
+		List<Integer> zoneTwo = new ArrayList<Integer>();
+		List<Integer> zoneThree = new ArrayList<Integer>();
+		for(int value : seatNumberList) {
+			if (value > 0 && value < 11) {
+				zoneOne.add(value);
+			}
+			else if (value > 10 && value < 21) {
+				zoneTwo.add(value);
+			}
+			else if (value > 20 && value < 31) {
+				zoneThree.add(value);
+			}
+		}
+		zoneOne.addAll(zoneTwo);
+		zoneOne.addAll(zoneThree);
+		return zoneOne;
 	}
 
 }
