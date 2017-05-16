@@ -22,7 +22,12 @@ public class Exercises {
 	 array2List( {"Left", "Right", "Forward", "Back"} )  ->  ["Left", "Right", "Forward", "Back"] 
 	 */
 	public List<String> array2List(String[] stringArray) {
-		return null;
+		List<String> list = new ArrayList<String>();
+		
+		for(String value : stringArray) {
+			list.add(value);
+		}
+		return list;
 	}
 	
 	/*
@@ -43,7 +48,15 @@ public class Exercises {
 	 no4LetterWords( {"Jack", "Jill", "Jane", "John", "Jim"} )  ->  ["Jim"]
 	 */
 	public List<String> no4LetterWords(String[] stringArray) {
-		return null;
+		List<String> list = new ArrayList<String>();
+		
+		for(String value : stringArray) {
+			if(value.length() != 4){
+				list.add(value);
+			}
+			
+		}
+		return list;
 	}
 
 
@@ -56,7 +69,16 @@ public class Exercises {
 		-> ["way", "the", "all", "jingle", "bells", "jingle", "bells", "jingle"]
 	 */
 	public List<String> reverseList(List<String> stringList) {
-		return null;
+		Stack<String> myStack = new Stack<String>();
+		for(String value : stringList) {
+			myStack.push(value);
+		}
+		List<String> result = new ArrayList<String>();
+		while(myStack.size() > 0) {
+			String value = myStack.pop();
+			result.add(value);
+		}
+		return result;
 	}
 
 	/*
