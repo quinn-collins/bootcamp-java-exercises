@@ -211,6 +211,13 @@ public class ExercisesTest {
 		assertThat("wordCount([\"a\", \"b\", \"a\", \"c\", \"b\"])", output, hasEntry("b", 1));
 		assertThat("wordCount([\"a\", \"b\", \"a\", \"c\", \"b\"])", output, hasEntry("c", 1));
 		
+		output = exercises.wordCount(new String[]{"c", "b", "a", "z"});
+		assertThat("wordCount([\"a\", \"b\", \"a\", \"c\", \"b\", \"z\"])", output.size(), equalTo(4));
+		assertThat("wordCount([\"a\", \"b\", \"a\", \"c\", \"b\", \"z\"])", output, hasEntry("a", 1));
+		assertThat("wordCount([\"a\", \"b\", \"a\", \"c\", \"b\", \"z\"])", output, hasEntry("b", 1));
+		assertThat("wordCount([\"a\", \"b\", \"a\", \"c\", \"b\", \"z\"])", output, hasEntry("c", 1));
+		assertThat("wordCount([\"a\", \"b\", \"a\", \"c\", \"b\", \"z\"])", output, hasEntry("z", 1));
+		
 	}
 	
 	/*
