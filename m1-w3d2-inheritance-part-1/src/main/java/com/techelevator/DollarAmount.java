@@ -10,6 +10,10 @@ public class DollarAmount {
         this.totalAmountInCents = totalAmountInCents;
     }
     
+    public DollarAmount(int dollars, int cents) {
+    	this.totalAmountInCents = dollars * 100 + cents;
+    }
+    
     public int getCents() {
         return (int)(totalAmountInCents % 100);
     }
