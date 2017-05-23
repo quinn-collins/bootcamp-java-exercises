@@ -13,10 +13,6 @@ public class DollarAmount { //implement the 2 string method and do unit testing.
     	this.totalAmountInCents = dollars * 100 + cents;
     }
     
-    public DollarAmount(int dollars, int cents) {
-    	this.totalAmountInCents = dollars * 100 + cents;
-    }
-    
     public int getCents() {
         return (int)(totalAmountInCents % 100);
     }
@@ -78,3 +74,12 @@ public class DollarAmount { //implement the 2 string method and do unit testing.
     }
     
 }
+
+
+
+
+
+
+
+
+
