@@ -20,6 +20,12 @@ public class BankAccountTest {
 	
 	@Test
 	public void check_balance() {
-		Assert.assertEquals(0, bank.getBalance());
+		Assert.assertEquals(new DollarAmount(0), bank.getBalance());
+	}
+	
+	@Test
+	public void check_balance_deposit() {
+		DollarAmount amountToDeposit = new DollarAmount(1000);
+		Assert.assertEquals(new DollarAmount(1000), bank.deposit(amountToDeposit));
 	}
 }
