@@ -1,4 +1,5 @@
 package com.techelevator;
+
 //part 2
 
 public class BankAccount {
@@ -46,4 +47,3 @@ public class BankAccount {
 		}
 	}
 }
-
