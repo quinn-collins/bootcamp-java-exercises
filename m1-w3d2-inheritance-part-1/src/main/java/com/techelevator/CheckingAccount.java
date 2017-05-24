@@ -6,7 +6,7 @@ public class CheckingAccount extends BankAccount {
 	public DollarAmount withdraw(DollarAmount amountToWithdraw) {
 		if(getBalance().isGreaterThanOrEqualTo(amountToWithdraw)) {
 			return super.withdraw(amountToWithdraw);
-		} else if(getBalance().isGreaterThanOrEqualTo(new DollarAmount(-9000))) {
+		} else if(getBalance().minus(amountToWithdraw).isGreaterThanOrEqualTo(new DollarAmount(-9000))) {
 			return super.withdraw(amountToWithdraw.plus(new DollarAmount(1000)));
 		} else {
 			return getBalance();
