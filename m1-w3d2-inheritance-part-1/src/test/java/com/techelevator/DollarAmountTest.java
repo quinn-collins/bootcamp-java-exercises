@@ -97,12 +97,14 @@ public class DollarAmountTest {
 	}
 	@Test
 	public void equal_object() {
-		Assert.assertTrue(new DollarAmount(0) != null && dollar.equals(new DollarAmount(0)));
-		Assert.assertFalse(new DollarAmount(0) != null  && dollar.equals(new DollarAmount(0)));
+		Assert.assertTrue(new DollarAmount(1000).equals(new DollarAmount(1000)));
+		Assert.assertFalse(new DollarAmount(1000).equals(new DollarAmount(500)));
+		Assert.assertFalse(new DollarAmount(1000).equals(null));
+		Assert.assertFalse(new DollarAmount(1000).equals(new String()));
 	}
 	@Test
 	public void override_hash_1050() {
-		dollar.hashCode(); //ask Casey, does this need a return value?
+		Assert.assertNotEquals(0, new DollarAmount(1000).hashCode());
 	}
 	
 	
