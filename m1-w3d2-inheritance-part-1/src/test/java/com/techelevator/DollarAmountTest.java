@@ -106,6 +106,10 @@ public class DollarAmountTest {
 	public void override_hash_1050() {
 		Assert.assertNotEquals(0, new DollarAmount(1000).hashCode());
 	}
+	@Test
+	public void override_to_string() {
+		Assert.assertEquals("$10.50", dollar.toString());
+	}
 	
 	
 	

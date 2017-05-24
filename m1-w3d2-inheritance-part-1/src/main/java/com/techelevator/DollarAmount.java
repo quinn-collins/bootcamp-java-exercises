@@ -76,7 +76,7 @@ public class DollarAmount { //implement the 2 string method and do unit testing.
 //    new DollarAmount(3210).toString() new DollarAmount(1000).toString() → “$10.00” new DollarAmount(1).toString() → “$0.01”
     @Override
     public String toString() {
-    	return "";
+    	return "$" + getDollars() + "." + getCents();
     }
     
 }
