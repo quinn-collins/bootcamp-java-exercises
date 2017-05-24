@@ -39,8 +39,7 @@ public class BankAccount {
 		DollarAmount startingBalance = new DollarAmount(balance.getDollars(), balance.getCents());
 		//withdraw the amount
 		DollarAmount balanceAfter = withdraw(amountToTransfer);
-		destinationAccount.deposit(amountToTransfer);
-		
+
 		if(!startingBalance.equals(balanceAfter)) {
 			destinationAccount.deposit(amountToTransfer);
 			
