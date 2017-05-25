@@ -36,10 +36,15 @@ public class FruitTree {
      * @param numberOfPieces number of fruit pieces to remove
      * @return True if there is enough fruit to pick, false if not.
      */
-    public boolean PickFruit(int numberOfPieces)
+    public boolean pickFruit(int numberOfPieces)
     {
-        piecesOfFruitLeft -= numberOfPieces;
-        return true;
+    	if(piecesOfFruitLeft >= numberOfPieces) {
+    		piecesOfFruitLeft -= numberOfPieces;
+    		return true;
+    	}
+    	else {
+    		return false;
+    	}
     }
 
 }

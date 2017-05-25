@@ -19,6 +19,7 @@ public class Employee {
         this.firstName = firstName;
         this.lastName = lastName;
         this.annualSalary = salary;
+        this.employeeId = employeeId;
     }
 
     /**
@@ -82,7 +83,7 @@ public class Employee {
      * @param percentage number-based percentage (where 1% = 1.0, 2% = 2.0)
      */
     public void RaiseSalary(double percentage) {
-        double raiseAmount = annualSalary * percentage/100;
+        double raiseAmount = annualSalary * (percentage/100);
         annualSalary += raiseAmount;
     }
 
