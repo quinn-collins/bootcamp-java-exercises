@@ -4,11 +4,11 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-public class SalaryWorkerTest {
+public class VolunteerWorkerTest {
 SalaryWorker salary;
 @Before
 public void setup() {
-salary = new SalaryWorker("Sally", "Dood", 52000); //make new salary worker
+salary = new VolunteerWorker("Sally", "Dood", 52000); //make new salary worker
 }
 
 @Test
