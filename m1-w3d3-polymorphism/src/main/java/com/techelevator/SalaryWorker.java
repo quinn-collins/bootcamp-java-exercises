@@ -1,12 +1,19 @@
 package com.techelevator;
 
 public class SalaryWorker implements Worker {
-	String firstName = "";
-	String lastName = "";
+	private String firstName = "";
+	private String lastName = "";
 	double annualSalary;
+	
+	public SalaryWorker(String firstName, String lastName, double annualSalary){
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.annualSalary = annualSalary;
+	}
+
 	@Override
-	public double calculateWeeklyPay(int hoursWorked) {
-		return 1.2;
+	public double calculateWeeklyPay(double hoursWorked) {
+		return annualSalary / 52;
 	}
 	@Override
 	public String getFirstName() {
@@ -15,6 +22,10 @@ public class SalaryWorker implements Worker {
 	@Override
 	public String getLastName() {
 		return lastName;
+	}
+	
+	public double getAnnualSalary() {
+		return annualSalary;
 	}
 
 }
