@@ -1,0 +1,100 @@
+    * The new ojb.class#generate-repository-info attribute prevents the generation of field/reference/collection
+      descriptors in the repository as well as the table in the database schema
+      This attribute should be used when using inheritance with interfaces/abstract classes
+    * Database foreignkeys are now generated for collections, as well
+    * It is possible to prevent the generation of database foreignkeys for individual references
+      or collections using the database-foreignkey attribute (ojb.collection/ojb.reference).
+      However this attribute cannot be used to force generation of database-foreignkeys
+    * Inheritance with interfaces/abstract classes (i.e. classes without table) is now handled properly
+      for types that are referenced by references/collections even if the relevant foreignkey
+      (reference/1:n collection) or primarykey (m:n collection) is not defined in the basetype itself
+      but only in the subtypes. The XDoclet module will determine these fields and generate virtual
+      field descriptors in the class-descriptor of the basetype (even if generate-repository-info=false).
+      Additionally, database foreignkeys are generated if the subtypes map to the same table
+    * Additional attributes for generating documentation in the database schema:
+        - ojb.class#table-documentation
+        - ojb.field#column-documentation
+        - ojb.collection#indirection-table-documentation
+        -               #foreignkey-documentation
+        -               #remote-foreignkey-documentation
+    * Foreignkey columns of an m:n collection can be made primarykeys of the indirection table by
+      using the ojb.collection#indirection-table-primarykeys attribute
+
+NOTES:
+- ODMG-api refactoring!! All known issues in test suite are fixed. But the refactored odmg-api
+  version needs changes in auto-xxx settings in metadata and changed OJB.properties settings.
+  Please read carefully the 'CHANGES notes' below.
+- Don't forget to replace the old repository.dtd and OJB.properties file (both files changed).
+- If you plan to use OJB with an J2SE version older than 1.4, then you have to
+  replace the Geronimo jars with the corresponding ones from Sun's J2EE SDK. This
+  is because Geronimo is a J2EE 1.4 implementation and thus dependant upon
+  J2SE 1.4. Use instead the version of Sun's J2EE reference implementation that
+  correspond to your J2SE version. E.g. for J2SE 1.3 use the J2EE 1.3 SDK which
+  you can get from here: http://java.sun.com/j2ee/1.3/index.jsp
+- Performance improvement in handling of m:n relations
+- Add new property 'sequenceStart' for SequenceManagerHighLowImpl and SequeceManagerInMemoryImpl
+  more info see docs section 'sequence manager'
+- Recommended to read the updated 'object cache' reference guide to reflect on the changes made in
+  caching behavior.
+- By default a new locking implementation was used for odmg, to enable the old deprecated odmg-locking,
+  please see comments in OJB.properties file.
+
+CHANGES:
+- When using Oracl9i platform and DBCP connection factory, no PreparedStatement caching will occur
+  in the DBCP pool (Oracle JDBC-driver statement caching is performed by the platform as default).
+  statement pool, to avoid running out of server-side cursors when using Oracle9i platform.
+- Oracle9i default platform should now be usable and have large LOB support in JBoss environemnts,
+  please try the default Oracle9i platform and report your results to the ojb-user list.
+- Oracle9i default platform should now be usable and have large LOB support in BEA WebLogic,
+  please try the default Oracle9i platform in favor of WLOracle9i and report your results to
+  the ojb-user list.
+- Oracle9i platform no longer throws exceptions when Oracle-specific extensions initializer fails,
+  this should enable Oracle9i platform to degrade smoothly in not yet handled managed environments.
+- Oracle9i platform now uses ANSI SQL92 join syntax as per user-request. The Oracle platform
+  still uses Oracle join syntax to be compatible with Oracle 8 and older versions.
+- CollectionProxy classes will now throw an exception in constructor, if trying
+  to use dynamic proxies with MetadataManager in 'per thread changes' mode but
+  without any metadata profile key loaded in the current thread. See note about
+  fix in CollectionProxy under "BUG FIXES" below.
+- Minor changes in the repository.dtd. Add element object-cache to metadata interface and abstract class
+  declaration in class-descriptor. So replacement of old repository.dtd is needed.
+- Remove object-cache declaration from OJB.properties file. Use the 'object-cache' element in
+  repository file (example see repository_database.xml file shipped with OJB) to specify the cache
+  implementation. More detailed information see caching reference guide in docs.
+- Remove redundant ObjectCache implementations (ObjectCacheSoftImpl, ObjectCacheUnlimitiedImpl), same
+  behavior is possible with ObjectCacheDefaultImpl.
+- Remove undocumented 'ObjectCacheFilter' (used to filter out whole packages or classes from being cached).
+  Filter out packages or classes from being cached is still possible, please see 'object cache' reference guide.
+- !!!In managed enviroments the org.odmg.Transaction#abort() call no longer throws an
+  TransactionAbortedExceptionOJB, instead OJB does internal cleanup and set used
+  JTA-tx to setRollbackOnly if possible. Thus the client does no longer get an RemoteException.
+  The user have to throw an EJBException by himself to notify the client.
+- Performance of the default RowReader (RowReaderDefaultImpl) was improved, when mapping
+  several classes to the same table ("ojb-conrete class" feature), now only the fields of the
+  associated class were performed in RowReader instead invoking all fields of the table used by
+  the mapped classes.
+- Introduce new locking-package in kernel api. Now top-level api like odmg-api can use a kernel
+  lock manager to provide locking. Adapt odmg-locking to the new lock management and declare old locking stuff
+  in org.apache.ojb.odmg.locking package as deprecated. Add support for apache's commons-transaction locking part.
+- Use of database identity column (SequenceManagerNativeImpl). Move assign of PK values from
+  PersistenceBrokerImpl to JdbcAccessImpl#executeInsert. Remove usage of SequenceManager#setReferenceFKs,
+  will be handled by OJB in same way as without usage of database identity column.
+- odmg-api: Introduced new object reordering implementation (replaces old algorithm
+  in ObjectEnvelopeTable).
+- odmg-api: Change used 'OqlCollectionClass' in OJB.properties from a DList impl to ArrayList impl
+  to improve performance. If you need the additional features of odmg DList comment in the DList impl.
+- odmg-api: ** All relations (1:1, 1:n and m:n) need auto-update/delete setting 'none' to proper work.**
+- odmg-api: Cascade delete is now configurable via OJB.properties file and at runtime using
+  TransactionExt#setCascadingDelete method (cast Transaction instance to TransactionExt)
+
+BUG FIXES:
+Please refer to our Bug tracking site (http://issues.apache.org/scarab/servlet/scarab/)
+under http://issues.apache.org/scarab/servlet/scarab/issues/id/OJBxxx
+to see details for a bug with id OJBxxx.
+
+- Fix problem with StatementManager when binding delete-statement parameters
+  with null-values for numeric type columns under certain conditions.
+  (Oracle9i and jdbc-type=NUMERIC with a conversion class that can return null-values
+   was such a combination, resulting in SQLException in OracleStatement#get_internal_type.)
+- Fix bug in MetadataManager, when 'per thread changes' is enabled and CollectionProxy
+  proxies are used. Using proxies in this mode used to be undefined, since the lazy

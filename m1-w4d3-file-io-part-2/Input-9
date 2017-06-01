@@ -1,0 +1,100 @@
+See new entries in OJB.properties file.
+- added new sections to documentation
+
+
+BUG FIXES:
+- fix several bugs in documentation
+- fixed writing to memo columns in MS Access
+- fixed optimistic locking problem
+- fixed jdo tutorial setup
+
+Please refer to our Bug tracking site under
+http://scarab.werken.com/scarab/issues/id/OJBxxx to see details for a bug
+with id OJBxxx.
+
+
+---------------------------------------------------------------------
+Release 1.0 rc3
+---------------------------------------------------------------------
+
+NEW FEATURES:
+- With this release we are feature complete for the 1.0 release!
+For 1.0 you should not expect more features to be added.
+
+
+NOTES:
+- Intern table OJB_HL_SEQ (used by SequenceManagerHighLowImpl)
+  has changed! Now need an additional column 'VERSION' of type INTEGER
+  When updating from earlier version drop/reinstall table with additional field
+- PersistenceBrokerAware interface changed, methods beforeStore and afterStore
+  split into xxxInsert/xxxUpdate methods, all methods now expect an PersistenceBroker
+  argument
+- PersistenceBrokerListener interface replaced by PBStateListener
+- ManageableCollection interface add new method afterStore(...)
+- Remove obsolete method 'invalidate(Identity oid)' from PB-api
+
+
+CHANGES:
+- enhanced PB-api listener classes
+- unified handling of events in PB-api
+- adapt sequence manager implementations using 'long' instead 'int' keys
+- SequenceManagerHighLowImpl now use optimistic locking to support sequencing
+  across different JVM (except j2ee conform app server, see sequence manager doc).
+- Add new attribute 'autoNaming' to sequence manager implementations. Now
+  the implementations allow to switch on/off auto-generating of sequence names
+- merging the three package o.a.ojb.broker.ta, .singlevm and .server into
+  a new package o.a.ojb.broker.core
+
+BUG FIXES:
+- fixed problems with the JDO FieldManager to work with 1:1, 1:n and m:n
+  associations
+- OJB143, OJB152, OJB153, OJB156, OJB158, OJB159, OJB161
+
+Please refer to our Bug tracking site under
+http://scarab.werken.com/scarab/issues/id/OJBxxx to see details for a bug
+with id OJBxxx.
+
+
+---------------------------------------------------------------------
+Release 1.0 rc2
+---------------------------------------------------------------------
+
+NEW FEATURES:
+- With this release we are feature complete for the 1.0 release!
+For 1.0 you should not expect more features to be added.
+
+
+CHANGES:
+- improve cache package. Now the used cache is no longer a singleton.
+- Add CacheFilter interface to allow easy pre-filtering of cache methods.
+- Add Support for anonymous fields
+- Several improvements to SQL generation
+- improved handling of optimistic lock exceptions in ODMG
+
+
+BUG FIXES:
+- lots
+
+---------------------------------------------------------------------
+Release 1.0 rc1
+---------------------------------------------------------------------
+
+NEW FEATURES:
+- With this release we are feature complete for the 1.0 release!
+For 1.0 you should not expect more features to be added.
+
+
+CHANGES:
+- improved handling for non-distributable jars
+- MetadataManager: new methods, allow merge of new ConnectionDescriptor and RepositoryDescriptor
+(read from any repository file at runtime) with the existing ones.
+- add custom attribute support for DescriptorRepository and JdbcConnectionDescriptor.
+
+
+BUG FIXES:
+
+- repaired tutorial applications
+- fixed several bugs in the JDO RI plugin
+- compilation works for jdk 1.2 and 1.3 again
+- connection problem when using PBKey only with jcdAlias name (e.g. PBKey("myAlias")),
+now the user and password set in the repository file was used.

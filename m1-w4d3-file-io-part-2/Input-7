@@ -1,0 +1,100 @@
+    Please see the testcases QueryTest#testReportQueryGroupByExtents1 and
+    QueryTest#testReportQueryGroupByExtents2.
+
+- A count on ReportQueries containing groupBy does not deliver a correct result.
+
+- Batch handling doesn't work proper with optimistic locking. This will be fixed
+before long after 1.0
+
+---------------------------------------------------------------------
+Release 1.0 rc6
+---------------------------------------------------------------------
+
+NEW FEATURES:
+ -
+
+NOTES:
+- Repository.dtd has changed, don't forget to replace this file
+- Upgraded to the new Apache License, Version 2.0
+- No support for HSQLDB 1.7.2RC1 yet
+- No support for Torque 3.1 yet
+
+- Add new PersistenceBrokerFactory implementation for use in managed environments when *only* the
+PB-api was used and participation in JTA transaction via Synchronization interface is needed.
+
+- Add new configuration property 'autoSync' to ObjectCacheDefaultImpl. Used to enable a simple
+synchronization mechanism to keep cache in sync with DB
+
+- Add new attribute values for reference-/collection-descriptor auto-update/-delete attribute.
+Now we have five possible values: none, link, object, true, false. The true, false values
+are now deprecated but will NOT be removed in near future (so don't panic!).
+
+CHANGES:
+- fix bug in internal table OJB_HL_SEQ, column type of MAX_ID was INTEGER but
+needs BIGINT to support Long on java side
+
+- no longer throw an exception when calling abortTransaction more than one time
+or an internal rollback (by ConnectionManager on the used connection) was already done
+
+- Add object-cache tag in standard jdbc-connection-descriptor in repository_database.xml
+to enable new 'autoSync' property of ObjectCacheDefaultImpl for all operations made by
+this DB connection
+
+- Allow infinite lifetime of cached objects in ObjectCacheDefaultImpl (handle with care ;-))
+
+- odmg-api implementation, disable restore of transient objects on transaction abort,
+because we can't really restore the whole object with all references
+
+- now using ANTLR 2.7.2 and Unicode support in OQL queries
+- now using ANT 1.6.0
+
+- RelationshipPrefetcher no longer modifies auto-retrieve setting of Relationship-Descriptor.
+This may result in additional sql-queries but is safer in a multi-threaded environment.
+
+- Added column methods to Criteria. addColumnEqualTo, addColumnIn etc. The column parameter
+of these methods will not be translated during sql-generation. These methods are mainly used
+for internal purpose.
+
+BUG FIXES:
+
+Please refer to our Bug tracking site (http://issues.apache.org/scarab/servlet/scarab/)
+under http://issues.apache.org/scarab/servlet/scarab/issues/id/OJBxxx
+to see details for a bug with id OJBxxx.
+
+- fix bug in MetadataManager, when 'per thread changes' is enabled and many different
+DescriptorRepository instances were used, gc can't collect unused instances because
+StatementManager doesn't release references to used DescriptorRepository instances.
+
+- fix bug in ObjectCacheDefaultImpl, it doesn't make sense to use a soft reference
+for the object wrapper of the cached object. Use a softreference for the cached
+object instead
+
+- fix bug in CacheDistributor (internal used ObjectCache implementation), each CacheDistributor
+instance have to held ObjectCache instances for the associated PersistenceBroker instance
+
+- fix documentation bug in ObjectCacheDefaultImpl, property 'timeout' use
+seconds instead of milliseconds
+
+- fix bug in new DList implementation (DListImpl_2), materialization of objects
+failed when DList instance itself was persisted (using db.bind(...)) and
+re-loaded within tx, but iteration over the list values was done outside of the tx
+
+- The bogus ODMG Distributed Lockmanagement feature has been replaced by a new
+  Servlet based LockServer. Transaction isolation should now work properly even
+  accross a cluster of JVMs.
+
+- fix bug in MtoNCollectionPrefetcher, multi-key handling is now supported.
+
+- ClassCastException with ManageableCollection implementations on m:n relation.
+m:n relation now can handle ManageableCollection collection classes in a correct way,
+the collection class no longer needs to implement java.util.Collection.
+
+KNOWN ISSUES:
+- odmg-api: It is not possible to exchange objects in 1:n references.
+E.g. two objects with 1:n reference, each with one reference object, obj_1{ref_1}
+and obj_2{ref_2}. Lock objects and exchange the references in collection obj_1{ref_2}
+and obj_2{ref_1} and commit.
+
+
+---------------------------------------------------------------------
+Release 1.0 rc5

@@ -1,0 +1,100 @@
+@version $Id: release-notes.txt 365233 2005-12-21 22:51:31Z tomdz $
+
+========================================================================
+ObJectRelationalBridge -- Bridging Java Objects and Relational Databases
+========================================================================
+
+Apache ObJectRelationalBridge (OJB) is an Object/Relational mapping tool
+that provides transparent transactional persistence for Java Objects
+against relational databases. OJB provides ODMG and JDO interfaces.
+
+More information is available at http://db.apache.org/ojb
+
+Please refer to our issue tracker for more details on issues with id [OJB-xxx]
+http://issues.apache.org/jira/browse/OJB
+
+
+---------------------------------------------------------------------
+Release 1.0.4
+---------------------------------------------------------------------
+NEW FEATURES:
+* Support for embedded & network Derby (only distinct count queries don't work yet)
+* Added ability to prepare the database for OJB's unit tests via DdlUtils (instead of Torque)
+  Note that this is required when running the tests against Derby
+* [OJB-10] - Configurable Proxy generation (including CGLIB based generation)
+* [OJB-31] - Configurable JDBC driver-setting setFetchSize
+* [OJB-14] - Setting custom JDBC driver tuning options trough jdbc-connection-descriptor
+* [OJB-6]  - Support for stored procedures returning ResultSet.
+* [OJB-41] - ODMG-api: Allow cascading delete using auto-delete setting in metadata
+* [OJB-66] - Allow to specify a sequence start element for SequenceManagerNextValImpl.
+  Fixed for Oracle, PostgreSQL, MaxDB/SapDB, DB2. Additionally sequence properties
+  like 'increment by', 'cache', 'order',... are supported too. See 'sequence manger'
+  guide and javadoc
+* Add new ODMG extensions and configuration properties. All properties can be set
+  at runtime as global property in class ImplementationExt and for a specific
+  transaction in class TransactionExt:
+  - 'ordering' Allow to dis-/enable OJB's object ordering on transaction commit
+  - 'implicitLocking' Dis-/enable OJB's implicit locking
+* Add new property 'TxCheck' in OJB.properties file. When enabled, on PB store and
+  delete calls OJB checks for a running PB-tx, if not found an error is logged in order to
+  avoid store/delete calls without a running PB-tx (while development).
+
+NOTES:
+* Internal OJB class configuration files are changed, don't forget to replace
+  these files on upgrade from older version (by default the internal used
+  classes are located in repository_internal.xml).
+* Improved performance comparison tests ('ant perf-test' and 'ant performance').
+  Now the tests more fair for registered API's
+* In order to facilitate [OJB-10] the constructor signature of VirtualProxy has been changed.  
+
+CHANGES:
+* INTERNAL API CHANGES:
+  Pluggable class interfaces changed to support and fix OJB-31, OJB-6, OJB-63:
+  - StatementsForClassIF
+  - StatementManagerIF
+  - Platform
+  - RowReader
+  - SqlGenerator
+* Configurable ProxyFactory is now available. Both JDK-based (default) and CGLIB
+  are provided. CGLIB-based generation allows for proxies to be generated for all
+  persistent classes, and not just ones that implement an interface.
+* Change in behavior of property 'useAutoCommit="1"' in jdbc-connection-descriptor
+  detailed info can be found in reference guide of the repository file
+* ConnectionFactoryManagedImpl is declared deprecated. Now OJB automatic detect the
+  running JTA-transaction and suppress critical method calls on the used connection
+* Removed deprecated SequenceManager implementation SequenceManagerMySQLImpl
+* Remove unused method #setReferenceFKs from SequenceManager interface
+* ODMG-api: Method behavior of ImplementationImpl#setImplicitLocking(boolean) changed.
+  Now this method set the global property for 'implicitLocking'. Old version only changed the
+  implicit locking behavior for the current used transaction, this is moved to
+  TransactionExt#setImplicitLocking
+* Internal used OJB_HL_SEQ table changed. Remove of deprecated column.
+  If the SequenceManagerHighLowImpl was used and problems occur after upgrade, please
+  drop and recreate this table without removed column
+* Cleanup naming of 'PersistentField' implementation classes: Remove deprecated classes, rename
+  implementation classes, declare all ...ImplNew classes as deprecated.
+  See OJB.properties file.
+* Upgraded ANTLR to v2.7.5 (OQL and JDOQL parser classes have been re-generated)
+* Upgraded commons-dbcp to v1.2.1
+* Upgraded commons-pool to v1.2
+* Upgraded commons-beanutils to v1.7
+* Upgraded commons-logging to v1.0.4
+* Upgraded commons-collections to v3.1
+* Upgraded hsql to v1.8.0.2
+* Upgraded Torque to v3.1.1
+
+BUG FIXES:
+* [OJB-18] - ODMG ordering problem with circular/bidirectional 1:1 references
+* [OJB-25] - Inheritance (each subclass on separate table) PK problem with
+  nextval SequenceManager
+* [OJB-26] - JDBC-ODBC bridge problem
+* [OJB-27] - [ODMG] Foreign key violation
+* [OJB-29] - Infinite loop in case of refresh=true and cycles in references
+* [OJB-40] - CallableStatement check doesn't work with maxDB
+* [OJB-42] - MsSQLServer, auto-generated querry error (m:n relation)
+* [OJB-44] - ReferenceMap$Entry keeps growing over period of application usage.
+* [OJB-52] - KeyConstraintViolatedException during store
+* [OJB-54] - ConnectionFactoryManagedImpl may try to use pool
+* [OJB-55] - Getting foreignkeyField's FieldDescriptor is failing if the foreignkey
+  field is defined in the base class
+* [OJB-59] - Incorrect identity management in SequenceManagerNativeImpl

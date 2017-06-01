@@ -1,0 +1,100 @@
+Please refer to our Bug tracking site (http://issues.apache.org/scarab/servlet/scarab/)
+under http://issues.apache.org/scarab/servlet/scarab/issues/id/OJBxxx
+to see details for a bug with id OJBxxx.
+
+- fixed issue in AnonymousPersistentFieldForInheritance, class now use
+  specified factory methods (in class-descriptor) for pc objects too
+- fix for OJB275, include PK fields for "super" class-descriptor when using
+  "super" reference. Now on object insert, the PK values are copied from the
+  main object to the temporary created "super" objects.
+- fixed issue in PersistenceBrokerFactorySyncImpl, always wrap requested PB
+  instance with PB handle object
+- fixed issue in ObjectCachePerClassImpl, allow to set 'class-cache' to null
+- fixed issue with CollectionProxy and RemovalAwareCollection
+- RemovalAwareCollection is no longer the default collection-class for m:n-relationships
+- ManageableCollection#afterStore is only called if cascadeStoring is CASCADE_OBJECT
+- ojb no longer adds groupBy columns to the SELECT-clause, orderBy columns are still added because of sapdb
+- orderBy columns of the original query are used as joinAttributes in count-query
+- ALIAS-prefix again works for report-queries (see QueryTest#testReportQueryAlias)
+- odmg-api: Fix problem with TransactionExt#flush() call, always check for
+  changed objects
+- odmg-api: Fix issue with FK assignment, referenced proxy object should not be materialized to assign
+  FK in main object.
+- odmg-api: Fix Database#open(...) issue. In managed environments now no running JTA-tx was expected  
+
+KNOWN ISSUES:
+- odmg-api: If a user exchange already existing objects in 1:n references without changing the size
+  of the collection, the main object will not become dirty and the FK values of the exchanged objects
+  will not be updated.
+  E.g. two objects obj_1 anf obj_2 with 1:n reference to ref objects, each with one
+  existing/persistent reference object, obj_1{ref_1} and obj_2{ref_2}.
+  Lock objects and exchange the references in collection obj_1{ref_2}
+  and obj_2{ref_1} and commit --> FK values of ref_1 and ref_2 will not be updated.
+- odmg-api: Creation of m:n relation only works when objects created step by step (or use PB-api
+  as workaround), persist a whole object graph seems not to work proper.
+- Batch handling doesn't work proper with optimistic locking. This will be fixed
+  in version 1.1
+- Subqueries are not extent aware. see QueryTest#testSubQueryAgainstExtents
+- When using native Identity columns, OJB uses a temporary dummy value for created OJB Identity objects 
+  of new pc objects (negative long values are used as dummy values for Identity columns, the real value 
+  is available after the object insert), so the FK assignment is only valid after store of the 
+  referenced object (PB-api handles this correctly). TransactionImpl#lock assign the FK before the 
+  referenced object was written to DB. This only effects the ODMG API.
+- Mapping of an inheritance hierarchy to multiple joined tables fails in the ODMG
+  API only.
+
+---------------------------------------------------------------------
+Release 1.0
+---------------------------------------------------------------------
+NEW FEATURES:
+--
+
+NOTES:
+--
+
+CHANGES:
+- We introduce new PersistentField implementations in OJB.properties file called
+PersistentFieldXXXXImplNew. Per default one of the new PersistentField implementations was
+used. If you hit problems please send a report. You can reverting to old impl by
+changing property 'PersistentFieldClass' in OJB.prperties file. The new versions
+has much better performance in read/write nested fields (up to 50 times faster than
+the 'old' implementions) and will replace the old classes on next version. Because
+PersistentField is an important kernel class we wait for community response before
+final replacement.
+
+BUG FIXES:
+Please refer to our Bug tracking site (http://issues.apache.org/scarab/servlet/scarab/)
+under http://issues.apache.org/scarab/servlet/scarab/issues/id/OJBxxx
+to see details for a bug with id OJBxxx.
+
+
+KNOWN ISSUES:
+- The default ojb escape character '\' does not work for database using the same default as well and
+should therefore be double-escaped. As a workaround always use a custom escape character:
+
+	LikeCriteria.setEscapeCharacter('|');
+	Criteria crit = new Criteria();
+	crit.addLike("firstname", "h%|%");
+
+This issue is fixed for MySql and PostgreSql so far.
+
+- odmg-api: If a user exchange already existing objects in 1:n references without changing the size
+of the collection, the main object will not become dirty and the FK values of the exchanged objects
+will not be updated.
+E.g. two objects obj_1 anf obj_2 with 1:n reference to ref objects, each with one
+existing/persistent reference object, obj_1{ref_1} and obj_2{ref_2}.
+Lock objects and exchange the references in collection obj_1{ref_2}
+and obj_2{ref_1} and commit --> FK values of ref_1 and ref_2 will not be updated.
+
+- odmg-api: Creation of m:n relation only works when objects created step by step (or use PB-api
+as workaround), persist a whole object graph seems not to work proper.
+
+- ReportQueries should not be used with columns referencing Classes with extents:
+
+    ReportQueryByCriteria q = QueryFactory.newReportQuery(ProductGroup.class, crit);
+    q.setAttributes(new String[] { "groupName", "sum(allArticlesInGroup.stock)", "sum(allArticlesInGroup.price)" });
+    q.addGroupBy("groupName");
+
+    ProductGroup.allArticlesInGroup points to class Article having multiple extents.
+
+    As a workaround the query can be 'reversed' :

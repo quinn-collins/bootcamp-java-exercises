@@ -1,0 +1,100 @@
+  loading might or might not succeed depending on in which thread the data was loaded.
+  OJB will now reload the metadata profile used when creating the proxy,
+  before attempting to reference any persistence capable classes.
+  (Fixes occasional ClassNotPersistenceCapable exceptions seen in multithreaded
+   applications when using 'per thread changes'.)
+  See http://mail-archives.apache.org/eyebrowse/ReadMsg?listName=ojb-dev@db.apache.org&msgNo=9143
+- Managed Environment: Fix problem of abandoned connections and statements (e.g. detected
+  by JBoss) when query (iterator) result sets only partially materialized.
+- Fix bug in ObjectCacheDefaultImpl resolve cache object conflicts, see
+  http://mail-archives.apache.org/eyebrowse/ReadMsg?listName=ojb-user@db.apache.org&msgNo=15063
+- LockManager#releaseLock, when a write lock was found all read locks will be released too.
+  http://mail-archives.apache.org/eyebrowse/ReadMsg?listName=ojb-user@db.apache.org&msgNo=14885
+- Fix problem with automatic generated sequence names in SequenceManagerHighLowImpl and
+  SequenceManagerInMemoryImpl when different DB use the same table and column name for auto
+  incremented fields.
+  See http://mail-archives.apache.org/eyebrowse/ReadMsg?listName=ojb-user@db.apache.org&msgNo=14528
+- Fix materialization problem under heavy load, OJB no longer returns partially materialized
+  objects from cache.
+  See http://mail-archives.apache.org/eyebrowse/ReadMsg?listId=107&msgNo=14472
+- Fix key constraint problems when insert m:n relation manually via "linking"
+- Fix bug in SequenceManagerNativeImpl used to support DB identity columns, make counter for
+  temporary keys static to prevent lock not granted exceptions on insert of new objects.
+- odmg-api: if within a transaction the client returns a different instance of an already
+  locked object (e.g. serialized through network) method tx.lock and tx.markDirty do not
+  replace the already locked object instance by the new one. Now it will do so.
+- odmg-api: In managed environment odmg-api does clenup internal stuff (cache, locking) when
+  Synchronization#afterCompletion(int status) was called by the JTA-TxManager instead doing all this
+  stuff in #beforeCompletion()
+- odmg-api: Assign FK for 1:1 relations when persistent objects are written to DB, instead when objects
+  were locked.
+- odmg-api: Mixing of pessimistic and optimistic locking should be possible. Now all lock calls on objects
+  with optimistic locking enabled will be ignored.
+- odmg-api: Fixed: If a user exchange already existing objects in 1:n references without changing the size
+  of the collection, the main object will not become dirty and the FK values of the exchanged objects
+  will not be updated. This is fixed.
+- odmg-api: Fixed: Creation of m:n relation only works when objects created step by step (or use PB-api
+  as workaround), persist a whole object graph seems not to work proper. This is fixed.
+- odmg-api: Fixed: Mapping classes on multiple joined tables was not supported in
+  ODMG-API implementation. This is fixed (!except the known issue when Query or refer to a base class).
+
+KNOWN ISSUES:
+- Auto-Detection for insert/update objects checks to avoid DB queries the PK fields of the object.
+  If at least one PK field is 'NULL' or if primitive field '0', OJB assume the object is new and
+  needs insert. This will be configurable in next upcoming version. Workaround for PB-api: use method
+  PB#store(Object obj, ObjectModification mod) to state update or insert.
+- Batch handling doesn't work proper with optimistic locking. This will be fixed
+  in version 1.1
+- Subqueries are not extent aware. see QueryTest#testSubQueryAgainstExtents
+- When a class mapped on multiple joined tables was used in a reference only objects
+  of the base type class will be instantiated, e.g. a Company class has
+  a 1:n reference 'employees' to a base class Employee and class Manager extends Employee,
+  then 'employees' only contains objects of type Employee even if the real type was Manager.
+  See in OJB test suite ...broker.InheritanceMultipleTableTest#testInheritancedObjectsInCollectionReferences
+  Same problem occur when query the base class, then OJB only returns objects of base type instead
+  the real type.
+- Managed Environment: When run OJB in managed environment and using PBStateListener, the call of
+  PBStateListener#beforeClose(PBStateEvent event) is made twice when
+  a PB instance was closed in a JTA-tx (for the first time when PB.close() was called
+  in bean on the PB handle, second time when the JTA-tx completes)
+- otm-api: The OTM API has a known caching issue and should not be considered for code used
+  in production environments. The future of the OTM layer will be subject for discussion on the
+  OJB developers list, if you are using it - please subscribe to ojb-dev and make your voice heard.
+- Oracle9i platform: when using statement batching, there is a 2k limit on BLOB + 4k limit on CLOB.
+
+
+---------------------------------------------------------------------
+Release 1.0.1
+---------------------------------------------------------------------
+NEW FEATURES:
+- Add new service for Identity object creation - PersistenceBroker#serviveIdentity()
+  This service makes creation of Identiy objects to lookup objects by primary key much
+  easier. More info see PersistenceBroker Tutorial section "Find object by primary key".
+    For example, to lookup an object by its Identity with PB.getObjectByIdentity, for
+    a single Long PK field (with value '23') you can call:
+    Identity oid = broker.serviceIdentity().buildIdentity(MyClass.class, new Long(23));
+    result = (MyClass) broker.getObjectByIdentity(oid);
+
+NOTES:
+- Changed build dependency from Sun's SCSL licensed J2EE specification jars to the
+  Geronimo projects's ASL 2.0 licensed J2EE specification jars. Users now can build
+  the core of OJB (everything but the jdori plugin) directly from the source tarball
+  or CVS.
+  NOTE: If you plan to use OJB with an J2SE version older than 1.4, then you have to
+        replace the Geronimo jars with the corresponding ones from Sun's J2EE SDK. This
+        is because Geronimo is a J2EE 1.4 implementation and thus dependant upon
+        J2SE 1.4. Use instead the version of Sun's J2EE reference implementation that
+        correspond to your J2SE version. E.g. for J2SE 1.3 use the J2EE 1.3 SDK which
+        you can get from here: http://java.sun.com/j2ee/1.3/index.jsp
+
+CHANGES:
+- PersistenceBroker interface changed, add service method for IdentityFactory
+- Performance improvement in RsIterator, first only map PK values from the
+  result set and check against the cache. If no match map all field values
+  from result set to internal Map class (old version always maps all values
+  from the result set to the internal Map class).
+- add in ObjectCacheDefaultImpl new attribute 'cachingKeyType' this allows to
+  differ cached objects of same class for different databases.
+  http://mail-archives.apache.org/eyebrowse/ReadMsg?listName=ojb-user@db.apache.org&msgNo=13931
+
+BUG FIXES:

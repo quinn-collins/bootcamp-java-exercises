@@ -1,0 +1,100 @@
+---------------------------------------------------------------------
+
+This is the last planned rc before the 1.0 release. If there are no major
+bugs this release will be relabled as 1.0 after two weeks.
+
+NEW FEATURES:
+- With this release we are feature complete for the 1.0 release!
+For 1.0 you should not expect more features to be added.
+
+NOTES:
+- slight changes in repository.dtd, OJB.properties were made
+
+- internal kernel interface method signature changed:
+in JdbcAccess two method signatures change
+in StatementManagerIF one method signature change
+These changes are necessary to fix a "design bug" in handling
+of jdbc type metadata. See discussion on dev-list "[VOTE] Design bug fixed - check in?"
+
+- ObjectCache implementation classes constructor arguments change. We
+now pass a Properties argument too. Allows to set configuration properties
+for each ObjectCache instance
+
+- changed the JDORI plugin to now use the latest 1.0.1 version of the JDO reference implementation.
+
+- OJB is now very strict in handling RsIterator instances. RsIterator is
+bound very closely to the used PersistenceBroker instance.
+Thus if you do a
+PersistenceBroker#close
+PersistenceBroker#commitTransaction
+PersistenceBroker#abortTransaction
+call, the current <tt>RsIterator</tt> instance resources will be cleaned up automatic
+and invalidate current instance.
+
+CHANGES:
+- add possibility to declare ObjectCache implementation on class-descriptor
+and jdbc-connection-descriptor level (means per class and per database connection) too
+
+- add a new interface called org.apache.ojb.odmg.TransactionExt
+to make additional proprietary methods available for user by
+casting org.odmg.Transaction to TransactionExt
+
+- behaviour of org.odmg.Transaction#checkpoint() changed. Now the
+database transaction was commited when checkpoint was called, seems this
+is more in unison with ODMG spec:
+" Calling checkpoint commits persistent object modifications made within the
+transaction since the last checkpoint to the database."
+If you want to flush persistent object
+modifications made within the ODMG transaction to the underlying database
+transaction without commit the changes (old behaviour of checkpoint()),
+please cast Transaction to TransactionExt and use new method flush().
+
+- make odmg collections pluggable via OJB.properties file
+
+- Restructuring and further enhancements of the documentation.
+
+
+BUG FIXES:
+
+Please refer to our Bug tracking site under
+http://scarab.werken.com/scarab/issues/id/OJBxxx to see details for a bug
+with id OJBxxx.
+
+- fix ClassLoader problem when merging DescriptorRepository instances
+
+- fixed the JDORI problems with loading object via extend based queries.
+  now objects are brought under JDO control and equipped with a statemanager
+  in the load process.
+
+---------------------------------------------------------------------
+Release 1.0 rc4
+---------------------------------------------------------------------
+
+NEW FEATURES:
+- With this release we are feature complete for the 1.0 release!
+For 1.0 you should not expect more features to be added.
+- added a XDoclet OJB Module that allows to generate repository.xml
+  and DDL from tagged Java sources to the "contrib" distribution.
+- added an OJB Taglib that allows to use OJB directly from JSP pages
+  to the "contrib" distribution.
+
+NOTES:
+- update used xdoclet version in 'ejb-examples'
+(see section deployment/'Build the OJB sample session beans')
+to version 1.2xx
+
+CHANGES:
+- Enhance MetadataManager, add new methods, simplify handling
+of different persistent object metadata profiles (means different
+org.apache.ojb.broker.metadata.DescriptorRepository instances) at
+runtime
+- Provide a PUBLIC doctype declaration for the repository.xml
+- add a convenience Constructor to QueryByCriteria that
+  builds a query selecting all instances of a class
+- add isClosed() method to PersistenceBroker interface to
+check if a broker instance was already closed.
+- make OJB more strict in handling closed PersistenceBroker
+instances. Now it's not any longer possible to use closed
+PersistenceBroker instances.
+- Package ...metadata.fieldaccess refactored/changed. Now
+all PersistentField implementations support 'nested fields'.

@@ -1,0 +1,100 @@
+  because of wrong plate-forme settings
+* [OJB-62] - addPathClass in QueryByCriteria does not consider inheritance
+* [OJB-63] - Bug when query against objects mapped on multiple joined tables ("super"-references)
+* [OJB-70] - Connection reset by peer: socket write error
+* [OJB-76] - OJB MtoN implementor failes to work properly with composite M&N keys that
+  have some fields common.
+* [OJB-77] - PlatformMsSQLServerImpl.getLastInsertIdentityQuery creates incorrect SQL
+  statement to pull the identity from the last
+
+KNOWN ISSUES:
+* Auto-Detection for insert/update objects checks to avoid DB queries the PK fields of the object.
+  If at least one PK field is 'NULL' or if primitive field '0', OJB assume the object is new and
+  needs insert. This will be configurable in next upcoming version. Workaround for PB-api: use method
+  PB#store(Object obj, ObjectModification mod) to state update or insert.
+* Batch handling doesn't work properly with optimistic locking. This will be fixed
+  in version 1.1
+* Subqueries are not extent aware. see QueryTest#testSubQueryAgainstExtents
+* Managed Environment: When run OJB in managed environment and using PBStateListener, the call of
+  PBStateListener#beforeClose(PBStateEvent event) is made twice when
+  a PB instance was closed in a JTA-tx (for the first time when PB.close() was called
+  in bean on the PB handle, second time when the JTA-tx completes)
+* otm-api: The OTM API has a known caching issue and should not be considered for code used
+  in production environments. The future of the OTM layer will be subject for discussion on the
+  OJB developers list, if you are using it - please subscribe to ojb-dev and make your voice heard.
+* Oracle9i platform: when using statement batching, there is a 2k limit on BLOB + 4k limit on CLOB.
+
+
+
+---------------------------------------------------------------------
+Release 1.0.3
+---------------------------------------------------------------------
+NEW FEATURES:
+
+
+NOTES:
+- odmg-api: Named objects can now be non- and persistence capable objects. At least
+  the named object have to be serializable.
+
+CHANGES:
+- Refactoring DCollection implementations, remove DListImpl_2 classes (code moved to DListImpl)
+- Object2ByteArrFieldConversion: If source object on conversion javaToSQL is 'null', no longer create an
+  byte array simply return 'null'
+
+BUG FIXES:
+Please refer to our Bug tracking site (http://issues.apache.org/jira/secure/BrowseProject.jspa?id=10700)
+to see details for a bug with id OJB-xxx.
+
+- odmg-api: OJB-7 - Fix critical property setting in OJB.properties file
+- odmg-api: OJB-8 - Fix bug when using cascading delete on empty 1:1 reference
+- odmg-api: Fix bug with named object. On 'unbind' of a named object, if the object is a persistence capable
+  object (object with metadata mapping), the object itself will not be deleted. All other (serializable)
+  named objects will be deleted on unbind.
+- odmg-api: Fix bug with named objects when using database based Identity columns (SequenceManagerNativeImpl)
+- odmg-api: Fix bug when persisting DCollection instances when using database based
+  Identity columns (SequenceManagerNativeImpl).
+
+
+
+KNOWN ISSUES:
+- Auto-Detection for insert/update objects checks to avoid DB queries the PK fields of the object.
+  If at least one PK field is 'NULL' or if primitive field '0', OJB assume the object is new and
+  needs insert. This will be configurable in next upcoming version. Workaround for PB-api: use method
+  PB#store(Object obj, ObjectModification mod) to state update or insert.
+- Batch handling doesn't work proper with optimistic locking. This will be fixed
+  in version 1.1
+- Subqueries are not extent aware. see QueryTest#testSubQueryAgainstExtents
+- When a class mapped on multiple joined tables was used in a reference only objects
+  of the base type class will be instantiated, e.g. a Company class has
+  a 1:n reference 'employees' to a base class Employee and class Manager extends Employee,
+  then 'employees' only contains objects of type Employee even if the real type was Manager.
+  See in OJB test suite ...broker.InheritanceMultipleTableTest#testInheritancedObjectsInCollectionReferences
+  Same problem occur when query the base class, then OJB only returns objects of base type instead
+  the real type.
+- Managed Environment: When run OJB in managed environment and using PBStateListener, the call of
+  PBStateListener#beforeClose(PBStateEvent event) is made twice when
+  a PB instance was closed in a JTA-tx (for the first time when PB.close() was called
+  in bean on the PB handle, second time when the JTA-tx completes)
+- otm-api: The OTM API has a known caching issue and should not be considered for code used
+  in production environments. The future of the OTM layer will be subject for discussion on the
+  OJB developers list, if you are using it - please subscribe to ojb-dev and make your voice heard.
+- Oracle9i platform: when using statement batching, there is a 2k limit on BLOB + 4k limit on CLOB.
+
+---------------------------------------------------------------------
+Release 1.0.2
+---------------------------------------------------------------------
+NEW FEATURES:
+
+- New ant-target ojb-quickstart creates archives of ready-to-run apps for tutorials 1 and 2
+  complete with pre-created Hsqldb databases (based on ojb-blank).
+  These archives are also available in the binary download area.
+- Introduce first version of a two-level cache (transactional session cache with an application cache
+  handle with copies of cached objects). More detailed information see 'object cache' reference guide in docs.
+- All Oracle platforms will now transparently handle java.lang.Character fields mapped to
+  jdbc-types CHAR or VARCHAR, without any conversion class.
+- Oracle9i plaform now handles CLOB>4k and BLOB>2k when DBCP and/or P6Spy are used.
+- Oracle9i plaform can now be used with Oracle10g JDBC-driver. Escape processing statements are
+  removed and OracleConnection unwrapping have been adjusted to be compatible with 10g JDBC.
+- XDoclet module:
+    * Important: generate-table-info now only prevents the generation of a table in the database schema,
+      the class-descriptor is unaffacted

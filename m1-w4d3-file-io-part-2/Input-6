@@ -1,0 +1,100 @@
+
+    ReportQueryByCriteria q = QueryFactory.newReportQuery(Article.class, crit);
+    q.setAttributes(new String[] { "productGroup.groupName", "sum(stock)", "sum(price)" });
+    q.addGroupBy("productGroup.groupName");
+
+    Due to the fact the Article has extents multiple selects will be executed,
+    so the same ProductGroup may show up more than once.
+
+    Please see the testcases QueryTest#testReportQueryGroupByExtents1 and
+    QueryTest#testReportQueryGroupByExtents2.
+
+- A count on ReportQueries containing groupBy does not deliver a correct result.
+
+- Batch handling doesn't work proper with optimistic locking. This will be fixed
+before long after 1.0
+
+
+
+---------------------------------------------------------------------
+Release 1.0 rc7
+---------------------------------------------------------------------
+
+NEW FEATURES:
+
+NOTES:
+- OJB.properties file has changed, don't forget to replace on update!
+ Among other things the property 'ImplementationClass' was needed to set in managed environments.
+
+CHANGES:
+
+-OJB.properties file new properties:
+ListProxyClass
+IndirectionHandlerClass
+SetProxyClass
+RowReaderDefaultClass
+ImplementationClass
+The logging properties moved to a separate file - see below.
+
+- Logging settings have moved to separate OJB-logging.properties file
+
+- Logging initialization is now decoupled form OJB initialization; this is
+described in the new reference guide for logging
+
+- It is no longer necessary to provide an empty repository.xml file when starting
+without repository and connection descriptors
+
+- rename/move internal package org.apache.ojb.odmg.transaction to org.apache.ojb.broker.transaction.tm
+In managed environments each (top-level) API use transaction manager access, thus the TM related
+classes are moved to the PB kernel and OJB.properties entries change.
+
+- Base class for ODMG api access within non- or managed environments is now
+org.apache.ojb.odmg.OJB. The used org.odmg.Implementation interface implementation
+is specified in OJB.properties.
+
+- ConnectionManager is more strict on CM.releaseConnection() method calls. Now an
+exception is thrown when CM is in a "local transaction" status when try to release
+the connection. The local tx status of ConnectionManager and PersistenceBroker implementation
+is now decoupled, useful in managed environments allows to "close the connection" without
+change the PB tx-state.
+
+- the indirection handler (for reference proxies), and the list and set proxy classes
+can now be configured in the OJB.properties file
+
+- new CollectionProxy interface introduced to allow the ODMG api to make use of alternate collection proxy implementations.
+
+BUG FIXES:
+
+Please refer to our Bug tracking site (http://issues.apache.org/scarab/servlet/scarab/)
+under http://issues.apache.org/scarab/servlet/scarab/issues/id/OJBxxx
+to see details for a bug with id OJBxxx.
+
+KNOWN ISSUES:
+- odmg-api: If a user exchange already existing objects in 1:n references without changing the size
+of the collection, the main object will not become dirty and the FK values of the exchanged objects
+will not be updated.
+E.g. two objects obj_1 anf obj_2 with 1:n reference to ref objects, each with one
+existing/persistent reference object, obj_1{ref_1} and obj_2{ref_2}.
+Lock objects and exchange the references in collection obj_1{ref_2}
+and obj_2{ref_1} and commit --> FK values of ref_1 and ref_2 will not be updated.
+
+- odmg-api: Creation of m:n relation only works when objects created step by step (or use PB-api
+as workaround), persist a whole object graph seems not to work proper.
+
+- ReportQueries should not be used with columns referencing Classes with extents:
+
+    ReportQueryByCriteria q = QueryFactory.newReportQuery(ProductGroup.class, crit);
+    q.setAttributes(new String[] { "groupName", "sum(allArticlesInGroup.stock)", "sum(allArticlesInGroup.price)" });
+    q.addGroupBy("groupName");
+
+    ProductGroup.allArticlesInGroup points to class Article having multiple extents.
+
+    As a workaround the query can be 'reversed' :
+
+    ReportQueryByCriteria q = QueryFactory.newReportQuery(Article.class, crit);
+    q.setAttributes(new String[] { "productGroup.groupName", "sum(stock)", "sum(price)" });
+    q.addGroupBy("productGroup.groupName");
+
+    Due to the fact the Article has extents multiple selects will be executed,
+    so the same ProductGroup may show up more than once.
+
