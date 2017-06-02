@@ -2,8 +2,8 @@ package com.techelevator.view;
 
 public class DrinkItem extends VendingMachineItem {
 
-	public DrinkItem(String name, double price, int itemsRemaining) {
-		super(name, price, itemsRemaining);
+	public DrinkItem(String name, double price, int itemsRemaining, int itemSold) {
+		super(name, price, itemsRemaining, itemSold);
 	}
 	
 	@Override

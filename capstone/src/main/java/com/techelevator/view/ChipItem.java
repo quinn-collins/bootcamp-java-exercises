@@ -2,8 +2,8 @@ package com.techelevator.view;
 
 public class ChipItem extends VendingMachineItem {
 
-	public ChipItem(String name, double price, int itemsRemaining) {
-		super(name, price, itemsRemaining);
+	public ChipItem(String name, double price, int itemsRemaining, int itemSold) {
+		super(name, price, itemsRemaining, itemSold);
 	}
 	
 	@Override

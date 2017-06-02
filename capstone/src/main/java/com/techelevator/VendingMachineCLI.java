@@ -44,7 +44,7 @@ public class VendingMachineCLI {
 				while(true) {
 					for(int i = 1; i < purchaseMenu.length + 1; i++){
 						System.out.println(i + ") " + purchaseMenu[i - 1]);
-					}
+					} System.out.println("Current Money Provided: " + menu.getTotalMoney());
 					String decision = input.nextLine();
 					if(decision.equals("1")) {
 						menu.increaseMoney();

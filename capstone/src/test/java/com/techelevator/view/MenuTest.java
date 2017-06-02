@@ -1,115 +1,58 @@
 package com.techelevator.view;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Scanner;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.techelevator.view.Menu;
+
 
 public class MenuTest {
-
-	private ByteArrayOutputStream output;
-
+	Menu menu;
+	private PrintWriter out;
+	private Scanner in;
+	private String[] validAmount = { "$1", "$2", "$5", "$10", "Exit" };
+	private double totalMoney;
+	private Map<String, VendingMachineItem> slotsAndItemInfo;
+	private List<VendingMachineItem> itemsPurchased = new ArrayList<VendingMachineItem>();
+	
+	Map<String, VendingMachineItem> map;
+	VendingMachineItem item;
+	
 	@Before
-	public void setup() {
-		output = new ByteArrayOutputStream();
+	public void setup(){
+		menu = new Menu(System.in,System.out);
+		map = new LinkedHashMap<String, VendingMachineItem>();
+		item = new VendingMachineItem("name",4.0,5,0);
+		map.put("A1", item);
 	}
-	
 	@Test
-	public void displays_a_list_of_menu_options_and_prompts_user_to_make_a_choice() {
-		Object[] options = new Object[] {  new Integer(3), "Blind", "Mice" };
-		Menu menu = getMenuForTesting();
-		
-		menu.getChoiceFromOptions(options);
-		
-		String expected = "\n"+
-				 		  "1) "+options[0].toString()+"\n" + 
-						  "2) "+options[1].toString()+"\n" +
-						  "3) "+options[2].toString()+"\n\n" +
-						  "Please choose an option >>> ";
-		Assert.assertEquals(expected, output.toString());	  
+	public void test_get_current_money(){
+		Assert.assertEquals(totalMoney, menu.getCurrentMoney(), 0.01);
 	}
-	
 	@Test
-	public void returns_object_corresponding_to_user_choice() {
-		Integer expected = new Integer(456);
-		Integer[] options = new Integer[] {  new Integer(123), expected, new Integer(789) };
-		Menu menu = getMenuForTestingWithUserInput("2\n");
-
-		Integer result = (Integer)menu.getChoiceFromOptions(options);
-		
-		Assert.assertEquals(expected, result);	  
+	public void test_get_total_money(){
+		Assert.assertEquals(totalMoney, menu.getTotalMoney(),0.01);
 	}
-	
 	@Test
-	public void redisplays_menu_if_user_does_not_choose_valid_option() {
-		Object[] options = new Object[] {  "Larry", "Curly", "Moe" };
-		Menu menu = getMenuForTestingWithUserInput("4\n1\n");
-		
-		menu.getChoiceFromOptions(options);
-		
-		String menuDisplay = "\n"+
-				 			 "1) "+options[0].toString()+"\n" + 
-						     "2) "+options[1].toString()+"\n" +
-						     "3) "+options[2].toString()+"\n\n" +
-						     "Please choose an option >>> ";
-		
-		String expected = menuDisplay + 
-					      "\n*** 4 is not a valid option ***\n\n" +
-					      menuDisplay;
-		
-		Assert.assertEquals(expected, output.toString());
+	public void test_derease_money(){
+		menu.decreaseMoney(2);
+		Assert.assertEquals(-2, menu.getTotalMoney(),0.01);
 	}
-	
-	@Test
-	public void redisplays_menu_if_user_chooses_option_less_than_1() {
-		Object[] options = new Object[] {  "Larry", "Curly", "Moe" };
-		Menu menu = getMenuForTestingWithUserInput("0\n1\n");
-		
-		menu.getChoiceFromOptions(options);
-		
-		String menuDisplay = "\n"+
-				 			 "1) "+options[0].toString()+"\n" + 
-						     "2) "+options[1].toString()+"\n" +
-						     "3) "+options[2].toString()+"\n\n" +
-						     "Please choose an option >>> ";
-		
-		String expected = menuDisplay + 
-					      "\n*** 0 is not a valid option ***\n\n" +
-					      menuDisplay;
-		
-		Assert.assertEquals(expected, output.toString());
-	}
-	
-	@Test
-	public void redisplays_menu_if_user_enters_garbage() {
-		Object[] options = new Object[] {  "Larry", "Curly", "Moe" };
-		Menu menu = getMenuForTestingWithUserInput("Mickey Mouse\n1\n");
-		
-		menu.getChoiceFromOptions(options);
-		
-		String menuDisplay = "\n"+
-							 "1) "+options[0].toString()+"\n" + 
-						     "2) "+options[1].toString()+"\n" +
-						     "3) "+options[2].toString()+"\n\n" +
-						     "Please choose an option >>> ";
-		
-		String expected = menuDisplay + 
-					      "\n*** Mickey Mouse is not a valid option ***\n\n" +
-					      menuDisplay;
-		
-		Assert.assertEquals(expected, output.toString());
-	}
-
-	private Menu getMenuForTestingWithUserInput(String userInput) {
-		ByteArrayInputStream input = new ByteArrayInputStream(String.valueOf(userInput).getBytes());
-		return new Menu(input, output);
-	}
-
-	private Menu getMenuForTesting() {
-		return getMenuForTestingWithUserInput("1\n");
-	}
+//	@Test
+//	public void test_decrease_item_count(){
+//		Assert.assertEquals(4, item.getItemsRemaining());
+//	}
+//	@Test
+//	public void test_increase_item_sold(){
+//		Assert.assertEquals(4, item.getItemsRemaining());
+//	}
 }
