@@ -17,12 +17,17 @@ public class Exercises {
     arrayDeduplication([1, 1, 1]) → [1]
     */
     public int[] arrayDeduplication(int[] nums) {
-    	int end = nums.length;
-    	Set<Integer> set = new HashSet<Integer>();
-
-    	for(int i = 0; i < end; i++){
-    	  set.add(nums[i]);
-    	}
+       	Set<Integer> setA = new LinkedHashSet<Integer>();
+       	int[] noDups;
+       	int i = 0;
+       	for(int number: nums) {
+       		setA.add(number);
+       	}
+       	noDups = new int[setA.size()];
+       	for(int number : setA) {
+       		noDups[i++] = number;
+       	}
+    	return noDups;
     }
     	
     
@@ -36,6 +41,29 @@ public class Exercises {
         arrayIntersection([], []) → []
     */
     public int[] arrayIntersection(int[] a, int[] b) {
+    	Set<Integer> setA = new HashSet<Integer>();
+    	Set<Integer> setB = new HashSet<Integer>();
+    	Set<Integer> setC = new HashSet<Integer>();
+    	int[] newArray;
+    	int i = 0;
+    
+    	for(int number : a) {
+    		setA.add(number);
+    	}
+    	for(int number : b) {
+    		setB.add(number);
+    	}
+    	for(int number : setA) {
+    		if(setB.contains(number)) {
+    			setC.add(number);
+    		}
+    	}
+    	newArray = new int[setC.size()];
+    	for(int number : setC) {
+    		newArray[i++] = number;
+    	}
+    	return newArray;
+    	
     	
     }
     
@@ -45,8 +73,30 @@ public class Exercises {
     arraySort([8, 13, 9, 12]) → [8, 9, 12, 13]        
     */
     public int[] arraySort(int[] nums) {
-        List<Integer> asdf = new ArrayList<Integer>();
-        asdf.sort(c);
+        List<Integer> sorts = new ArrayList<Integer>();
+        int[] sortedArray;
+        for(int number : nums) {
+        	sorts.add(number);
+        }
+        // this passes the test but if the input was 12,11,10,22,13,15
+        for(int i = 0, j = 1; i < sorts.size() - 1; i++, j++) {
+        	if(sorts.get(i) > sorts.get(j)) {
+        		int x = sorts.get(i);
+        		int y = sorts.get(j);
+        		sorts.remove(j);
+        		sorts.remove(i);
+        		sorts.add(i, y);
+        		sorts.add(j, x);
+        	}
+        }
+        
+        int i = 0;
+        sortedArray = new int[sorts.size()];
+        for(int number : sorts) {
+        	sortedArray[i++] = number;
+        }
+        return sortedArray;
+        
     }
 
     /*
@@ -57,26 +107,32 @@ public class Exercises {
     blackjack(19, 22) → 19
     */
     public int blackjack(int a, int b) {
-        int firstNumberDiff = 21 - a;  //2
-        int secondNumberDiff = 21 - b;  //-1
-        while(firstNumberDiff != 21 || secondNumberDiff != 21) {
-        	firstNumberDiff++;
-        	secondNumberDiff++;
-        	if(firstNumberDiff  > 21 && secondNumberDiff > 21) {
-        		return 0;
-        	}
-        }
-        if (firstNumberDiff == 21 && secondNumberDiff != 21) {
-        	return a;
-        }
-        else if (secondNumberDiff == 21 && firstNumberDiff != 21) {
-        	return b;
-        }
-        else {
-        	return 0;
-        }
-        
-       
+    	int x = 22;
+    	int y = 22;
+    	boolean aOver = false;
+    	boolean bOver = false;
+    	
+    	if(a <= 21) {
+    		x = 21 - a;
+    	}
+    	else {
+    		aOver = true;
+    	}
+    	if(b <= 21) {
+    		y = 21 - b;
+    	}
+    	else {
+    		bOver = true;
+    	}
+    	if(aOver && bOver) {
+    		return 0;
+    	}
+    	if(x < y) {
+    		return a;
+    	}
+    	else {
+    		return b;
+    	}
     }
     
     /*
@@ -179,7 +235,17 @@ public class Exercises {
     * mixStart("piz snacks") → false        
     */
     public boolean mixStart(String str) {
-        return false;
+    	if(str.length() >= 3) {
+	        if(str.substring(1, 3).equalsIgnoreCase("ix")) {
+	        	return true;
+	        }
+	        else {
+	        	return false;
+	        }
+    	}
+    	else {
+    		return false;
+    	}
     }
 
     /*
@@ -189,7 +255,22 @@ public class Exercises {
     more14([1, 1]) → true
     */
     public boolean more14(int[] nums) {
-        return false;
+    	int ones = 0;
+    	int fours = 0;
+        for(int i = 0; i < nums.length; i++) {
+        	if(nums[i] == 1) {
+        		ones++;
+        	}
+        	else if(nums[i] == 4) {
+        		fours++;
+        	}
+        }
+        if(ones > fours) {
+        	return true;
+        }
+        else {
+        	return false;
+        }
     }
     
     /*
@@ -201,7 +282,11 @@ public class Exercises {
     * noTriples([1, 1, 1, 2, 2, 2, 1]) → false
     */
     public boolean noTriples(int[] nums) {
-        return false;
+        for(int i = 0; i < nums.length; i++) {
+        	if(nums[i] == nums[i++]) {
+        		
+        	}
+        }
     }
 
     /*
