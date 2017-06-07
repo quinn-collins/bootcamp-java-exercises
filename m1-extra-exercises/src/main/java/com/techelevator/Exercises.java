@@ -1,6 +1,12 @@
 package com.techelevator;
 
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
 
 public class Exercises {
 
@@ -11,8 +17,15 @@ public class Exercises {
     arrayDeduplication([1, 1, 1]) → [1]
     */
     public int[] arrayDeduplication(int[] nums) {
-        return null;
+    	int end = nums.length;
+    	Set<Integer> set = new HashSet<Integer>();
+
+    	for(int i = 0; i < end; i++){
+    	  set.add(nums[i]);
+    	}
     }
+    	
+    
     
     /*
     CHALLENGE: Using array A and array B, return an array that is the intersection of both A and B.
@@ -23,7 +36,7 @@ public class Exercises {
         arrayIntersection([], []) → []
     */
     public int[] arrayIntersection(int[] a, int[] b) {
-        return null;
+    	
     }
     
     /*
@@ -32,7 +45,8 @@ public class Exercises {
     arraySort([8, 13, 9, 12]) → [8, 9, 12, 13]        
     */
     public int[] arraySort(int[] nums) {
-        return null;
+        List<Integer> asdf = new ArrayList<Integer>();
+        asdf.sort(c);
     }
 
     /*
@@ -43,7 +57,26 @@ public class Exercises {
     blackjack(19, 22) → 19
     */
     public int blackjack(int a, int b) {
-        return 0;
+        int firstNumberDiff = 21 - a;  //2
+        int secondNumberDiff = 21 - b;  //-1
+        while(firstNumberDiff != 21 || secondNumberDiff != 21) {
+        	firstNumberDiff++;
+        	secondNumberDiff++;
+        	if(firstNumberDiff  > 21 && secondNumberDiff > 21) {
+        		return 0;
+        	}
+        }
+        if (firstNumberDiff == 21 && secondNumberDiff != 21) {
+        	return a;
+        }
+        else if (secondNumberDiff == 21 && firstNumberDiff != 21) {
+        	return b;
+        }
+        else {
+        	return 0;
+        }
+        
+       
     }
     
     /*
