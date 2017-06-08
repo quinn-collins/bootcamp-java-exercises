@@ -78,7 +78,7 @@ public class Exercises {
         for(int number : nums) {
         	sorts.add(number);
         }
-        // this passes the test but if the input was 12,11,10,22,13,15
+        
         for(int i = 0, j = 1; i < sorts.size() - 1; i++, j++) {
         	if(sorts.get(i) > sorts.get(j)) {
         		int x = sorts.get(i);
@@ -144,7 +144,25 @@ public class Exercises {
     closeFar(4, 1, 3) → true
     */
     public boolean closeFar(int a, int b, int c) {
-        return false;
+        boolean close = false;
+        boolean far = false;
+    	if(Math.abs(a - b) == 1 || Math.abs(a - b) == 0) {
+    		close = true;
+    	}
+    	if(Math.abs(a - b) > 2) {
+        	far = true;
+        }
+    	
+    	if(Math.abs(a - c) == 1 || Math.abs(a - c) == 0) {
+    		close = true;
+    	}
+    	
+    	if(Math.abs(a - c) > 2) {
+        	far = true;
+        }
+    	
+    	
+    	return(close && far);
     }
 
     /*
@@ -155,7 +173,18 @@ public class Exercises {
     countClumps([1, 1, 1, 1, 1]) → 1
     */
     public int countClumps(int[] nums) {
-        return 0;
+    	int clump = 0;
+    	boolean counted = false;
+        for(int i = 0, j = 1; i < nums.length - 1; i++, j++) {
+        	if(nums[i] == nums[j] && counted == false) {
+        		clump++;
+        		counted = true;
+        	}
+        	else if (nums[i] != nums[j]) {
+        		counted = false;
+        	}
+        }
+        return clump;
     }
 
     /*
@@ -164,7 +193,9 @@ public class Exercises {
     */
     public Integer FindNode(LinkedList<Integer> nodes, int n)
     {            
-        return null;
+        if(!nodes.contains(n)) {
+        	return null;
+        }
     }
 
     /*
@@ -176,7 +207,7 @@ public class Exercises {
     * has271([2, 7, 1]) → true     
     */
     public boolean has271(int[] nums) {
-        return false;
+        
     }
 
     /*
@@ -188,7 +219,7 @@ public class Exercises {
     lastDigit(23, 19, 3) → true
     */
     public boolean lastDigit(int a, int b, int c) {
-        return false;
+        return (a % 10 == b % 10 || a % 10 == c % 10 || b % 10 == c % 10);
     }
 
     /*
@@ -265,12 +296,7 @@ public class Exercises {
         		fours++;
         	}
         }
-        if(ones > fours) {
-        	return true;
-        }
-        else {
-        	return false;
-        }
+        return(ones > fours);
     }
     
     /*
