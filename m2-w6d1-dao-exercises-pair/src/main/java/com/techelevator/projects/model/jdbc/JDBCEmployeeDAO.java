@@ -22,8 +22,8 @@ public class JDBCEmployeeDAO implements EmployeeDAO {
 	@Override
 	public List<Employee> getAllEmployees() {
 		ArrayList<Employee> employees = new ArrayList<>();
-		String sqlGetAllEmployees = "SELECT department_id, first_name, last_name, birth_date, gender, hire_date" 
-										 + "FROM employee";
+		String sqlGetAllEmployees = "SELECT employee_id, department_id, first_name, last_name, birth_date, gender, hire_date" 
+										 + " FROM employee";
 		SqlRowSet result = jdbcTemplate.queryForRowSet(sqlGetAllEmployees);
 		while (result.next()){
 			Employee employee = mapRowToEmployee(result);
@@ -36,8 +36,8 @@ public class JDBCEmployeeDAO implements EmployeeDAO {
 	@Override
 	public List<Employee> searchEmployeesByName(String firstNameSearch, String lastNameSearch) {
 		ArrayList<Employee> employees = new ArrayList<>();
-		String sqlSearchEmployeesByName = "SELECT department_id, first_name, last_name, birth_date, gender, hire_date" 
-				 + "FROM employee WHERE first_name = ? AND last_name = ?";
+		String sqlSearchEmployeesByName = "SELECT employee_id, department_id, first_name, last_name, birth_date, gender, hire_date" 
+				 + " FROM employee WHERE first_name = ? AND last_name = ?";
 		SqlRowSet results = jdbcTemplate.queryForRowSet(sqlSearchEmployeesByName, firstNameSearch, lastNameSearch);
 		while(results.next()){
 			Employee employee = mapRowToEmployee(results);
@@ -49,8 +49,8 @@ public class JDBCEmployeeDAO implements EmployeeDAO {
 	@Override
 	public List<Employee> getEmployeesByDepartmentId(long id) {
 		ArrayList<Employee> employees = new ArrayList<>();
-		String sqlGetEmployeesByDepartmentId = "SELECT department_id, first_name, last_name, birth_date, gender, hire_date" 
-				 + "FROM employee WHERE department_id = ?";
+		String sqlGetEmployeesByDepartmentId = "SELECT employee_id, department_id, first_name, last_name, birth_date, gender, hire_date" 
+				 + " FROM employee WHERE department_id = ?";
 		SqlRowSet results = jdbcTemplate.queryForRowSet(sqlGetEmployeesByDepartmentId, id);
 		while(results.next()){
 			Employee employee = mapRowToEmployee(results);
