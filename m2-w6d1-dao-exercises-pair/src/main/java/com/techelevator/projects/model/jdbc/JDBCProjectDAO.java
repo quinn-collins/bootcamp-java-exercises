@@ -24,8 +24,8 @@ public class JDBCProjectDAO implements ProjectDAO {
 	@Override
 	public List<Project> getAllActiveProjects() {
 		ArrayList<Project> projects = new ArrayList<>();
-		String sqlGetAllActiveProjects = "Select project_id, name, to_date, from_date FROM project WHERE end_date IS NULL OR end_date > 2017-06-13";
-		SqlRowSet results = jdbcTemplate.queryForRowSet(sqlGetAllActiveProjects);
+		String sqlGetAllActiveProjects = "Select project_id, name, to_date, from_date FROM project WHERE to_date IS NULL OR to_date > ?";
+		SqlRowSet results = jdbcTemplate.queryForRowSet(sqlGetAllActiveProjects, LocalDate.now());
 		while(results.next()){
 			Project theProject = mapRowToProject(results);
 			projects.add(theProject);
@@ -41,15 +41,19 @@ public class JDBCProjectDAO implements ProjectDAO {
 
 	@Override
 	public void addEmployeeToProject(Long projectId, Long employeeId) {
-		String sqlAddEmployeeFromProject = "INSERT INTO project_employee (projectId , employeeId) VALUES (?,?)";
+		String sqlAddEmployeeFromProject = "INSERT INTO project_employee (project_id , employee_id) VALUES (?,?)";
 		jdbcTemplate.update(sqlAddEmployeeFromProject, projectId, employeeId);
 	}
 	private Project mapRowToProject(SqlRowSet results) {
 		Project theProject = new Project();
-		theProject.setId(results.getLong("id"));
+		theProject.setId(results.getLong("project_id"));
 		theProject.setName(results.getString("name"));
-		theProject.setStartDate(results.getDate("startDate").toLocalDate());
-		theProject.setEndDate(results.getDate("startDate").toLocalDate());
+		if (results.getDate("from_date") != null) {
+			theProject.setStartDate(results.getDate("from_date").toLocalDate());
+		}
+		if (results.getDate("to_date") != null) {
+			theProject.setEndDate(results.getDate("to_date").toLocalDate());
+		}
 		return theProject;
 	}
 
