@@ -44,6 +44,7 @@ public class ExercisesTest {
     */
 	@Test
     public void arraySort() {
+		assertArrayEquals("Input: {8, 13, 9, 12, 7})", new int[]{7, 8, 9, 12, 13}, exercises.arraySort(new int[]{8, 13, 9, 12, 7}));
 		assertArrayEquals("Input: {8, 13, 9, 12})", new int[]{8, 9, 12, 13}, exercises.arraySort(new int[]{8, 13, 9, 12}));
 		assertArrayEquals("Input: {8, 13, 9, 12})", new int[]{8, 9, 12, 13}, exercises.arraySort(new int[]{8, 13, 9, 12}));
 		assertArrayEquals("Input: {8, 13, 9, 12})", new int[]{8, 9, 12, 13}, exercises.arraySort(new int[]{8, 13, 9, 12}));

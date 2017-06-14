@@ -90,6 +90,17 @@ public class Exercises {
         	}
         }
         
+        for(int i = sorts.size() - 1, j = sorts.size() - 2; i > 0; i--, j--) {
+        	if(sorts.get(i) <= sorts.get(j)) {
+        		int x = sorts.get(i);
+        		int y = sorts.get(j);
+        		sorts.remove(i);
+        		sorts.remove(j);
+        		sorts.add(j, x);
+        		sorts.add(i, y);
+        	}
+        }
+        
         int i = 0;
         sortedArray = new int[sorts.size()];
         for(int number : sorts) {
