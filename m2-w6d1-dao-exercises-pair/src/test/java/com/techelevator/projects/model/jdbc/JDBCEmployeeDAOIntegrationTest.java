@@ -65,8 +65,8 @@ public class JDBCEmployeeDAOIntegrationTest {
 	@Test
 	public void can_search_employees_by_name() {
 		List<Employee> employees = new ArrayList<>();
-		String resultsName = "";
-		String searchName = "";
+		String resultsName = "t";
+		String searchName = "f";
 		String sqlSearchEmployeesByName = "SELECT department_id, first_name, last_name, birth_date, gender, hire_date" 
 				 + " FROM employee WHERE first_name = 'Quinn' AND last_name = 'Collins'";
 		SqlRowSet results = jdbctemplate.queryForRowSet(sqlSearchEmployeesByName);
@@ -84,8 +84,8 @@ public class JDBCEmployeeDAOIntegrationTest {
 	@Test
 	public void can_get_employees_by_department_id() {
 		List<Employee> employees = new ArrayList<>();
-		String resultsName = "";
-		String searchName = "";
+		String resultsName = "t";
+		String searchName = "f";
 		String sqlGetEmployeesByDepartmentId = "SELECT department_id, first_name, last_name, birth_date, gender, hire_date" 
 				 + " FROM employee WHERE department_id = '3'";
 		SqlRowSet results = jdbctemplate.queryForRowSet(sqlGetEmployeesByDepartmentId);
@@ -106,8 +106,8 @@ public class JDBCEmployeeDAOIntegrationTest {
 	@Test
 	public void can_get_employees_without_projects() {
 		List<Employee> employees = new ArrayList<>();
-		String resultsName = "";
-		String searchName = "";
+		String resultsName = "t";
+		String searchName = "f";
 	String sqlGetEmployeesWithoutProjects = "SELECT employee.employee_id, department_id, first_name, last_name, birth_date, gender, hire_date" 
 			 + " FROM employee LEFT JOIN project_employee ON project_employee.employee_id = employee.employee_id"
 			 + " WHERE project_employee.employee_id IS NULL OR project_employee.project_id IS NULL";
@@ -127,7 +127,40 @@ public class JDBCEmployeeDAOIntegrationTest {
 	Assert.assertEquals(resultsName, searchName);
 	}
 	
+	@Test
+	public void can_get_employees_by_project_id() {
+		List<Employee> employees = new ArrayList<>();
+		String resultsName = "t";
+		String searchName = "f";
+		String sqlInsertProjectEmployeeID = "INSERT INTO project_employee (project_id, employee_id) VALUES (3, 14)";
+		jdbctemplate.update(sqlInsertProjectEmployeeID);
+		String sqlGetEmployeesBYProjectId = "SELECT employee.employee_id, department_id, first_name, last_name, birth_date, gender, hire_date" 
+				 + " FROM employee JOIN project_employee ON project_employee.employee_id = employee.employee_id"
+				 + " WHERE project_employee.project_id = 3";
+		SqlRowSet results = jdbctemplate.queryForRowSet(sqlGetEmployeesBYProjectId);
+		while(results.next()) {
+			if(results.getString("first_name").equals("Robert")) {
+				resultsName = results.getString("first_name");
+			}
+		}
+		employees = dao.getEmployeesByProjectId(3L);
+		for(Employee employee : employees) {
+			if(employee.getFirstName().equals("Robert")) {
+				searchName = employee.getFirstName();
+			}
+		}
+		Assert.assertEquals(resultsName, searchName);
+	}
 	
+	@Test
+	public void can_change_employee_department() {
+		dao.changeEmployeeDepartment(14L, 4L);
+		String sqlChangeEmployeeDepartment = "SELECT employee_id, department_id, first_name, last_name, birth_date, gender, hire_date" 
+				 + " FROM employee WHERE employee_id = 14";
+		SqlRowSet results = jdbctemplate.queryForRowSet(sqlChangeEmployeeDepartment);
+		results.next();
+		Assert.assertEquals(4L, results.getLong("department_id"));
+	}
 	
 	
 	

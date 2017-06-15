@@ -90,9 +90,9 @@ public class JDBCEmployeeDAO implements EmployeeDAO {
 	@Override
 	public void changeEmployeeDepartment(Long employeeId, Long departmentId) {
 		String sqlChangeEmployeeDepartment = "UPDATE employee " +
-										     "SET department_id = ?" +
-											 "WHERE employee_id = ? ";
-		jdbcTemplate.queryForRowSet(sqlChangeEmployeeDepartment, departmentId, employeeId );
+										     "SET department_id = ? " +
+											 "WHERE employee_id = ?";
+		jdbcTemplate.update(sqlChangeEmployeeDepartment, departmentId, employeeId );
 		
 	}
 	

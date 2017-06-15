@@ -35,7 +35,7 @@ public class JDBCDepartmentDAO implements DepartmentDAO {
 	@Override
 	public List<Department> searchDepartmentsByName(String nameSearch) {
 		ArrayList<Department> departments = new ArrayList<>();
-		String sqlSearchAllDepartmentsByName = "SELECT name FROM department WHERE name = ?";
+		String sqlSearchAllDepartmentsByName = "SELECT department_id, name FROM department WHERE name = ?";
 		SqlRowSet results = jdbcTemplate.queryForRowSet(sqlSearchAllDepartmentsByName, nameSearch);
 		while (results.next()){
 			Department theDepartment = mapRowToDepartment(results);
@@ -46,7 +46,7 @@ public class JDBCDepartmentDAO implements DepartmentDAO {
 
 	@Override
 	public void updateDepartmentName(Long departmentId, String departmentName) {
-		String sqlUpdateDepartmentName = "UPDATE Deparment SET ? WHERE ?";
+		String sqlUpdateDepartmentName = "UPDATE Department SET ? WHERE ?";
 		jdbcTemplate.update(sqlUpdateDepartmentName, departmentName, departmentId);
 	}
 
