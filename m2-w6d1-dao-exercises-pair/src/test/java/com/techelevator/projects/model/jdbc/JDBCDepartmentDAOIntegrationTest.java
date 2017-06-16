@@ -83,7 +83,7 @@ public class JDBCDepartmentDAOIntegrationTest {
 	public void can_update_department_name() {
 		
 		dao.updateDepartmentName(5L, "Department");
-		String sqlFindDepartmentName = "SELECT department_id, name FROM department WHERE department_id =5";
+		String sqlFindDepartmentName = "SELECT department_id, name FROM department WHERE department_id = 5";
 		SqlRowSet results = jdbctemplate.queryForRowSet(sqlFindDepartmentName);
 		results.next();
 		Assert.assertEquals("Department", results.getString("name"));

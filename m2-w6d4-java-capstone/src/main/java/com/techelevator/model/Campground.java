@@ -1,5 +1,7 @@
 package com.techelevator.model;
 
+
+
 public class Campground {
 	private long campground_id;
 	private long park_id;
