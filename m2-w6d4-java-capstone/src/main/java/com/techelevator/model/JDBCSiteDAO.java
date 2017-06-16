@@ -1,5 +1,6 @@
 package com.techelevator.model;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,11 +10,11 @@ import org.springframework.jdbc.support.rowset.SqlRowSet;
 public class JDBCSiteDAO extends SiteDAO{
 
 	private JdbcTemplate jdbctemplate;
-	private String whereQuery;
 	
-	public JDBCSiteDAO(JdbcTemplate jdbctemplate, String whereQuery) {
+	
+	public JDBCSiteDAO(JdbcTemplate jdbctemplate) {
 		this.jdbctemplate = jdbctemplate;
-		this.whereQuery = whereQuery;
+		
 	}
 
 	@Override
@@ -21,14 +22,28 @@ public class JDBCSiteDAO extends SiteDAO{
 		ArrayList<Site> sites = new ArrayList<>();
 		
 		String sqlGetAllSites = "SELECT site.site_id, campground_id, site_number, max_occupancy, accessible, max_rv_length, utilities FROM site "
-								+ "JOIN reservation ON site.site_id = reservation.site_id"
-								+ whereQuery;
+								+ "JOIN reservation ON site.site_id = reservation.site_id";
 		SqlRowSet results = jdbctemplate.queryForRowSet(sqlGetAllSites);
 		while(results.next()) {
 			Site site = mapToSiteRow(results);
 			sites.add(site);
 		}
 		return sites;
+	}
+	
+	public ArrayList<Site> getSitesByCampsite(int campsiteChoiceInt, LocalDate arrivalChoiceDate, LocalDate departureChoiceDate) {
+		ArrayList<Site> sites = new ArrayList<>();
+		
+		String sqlSitesByCampsite = "SELECT * FROM site WHERE campground_id = ? AND site_id "
+									+ "NOT IN (SELECT site_id FROM reservation "
+									+ "WHERE (? >=  from_date and ? <= to_date) OR (? >= from_date and ? <= to_date))";
+		SqlRowSet results = jdbctemplate.queryForRowSet(sqlSitesByCampsite, campsiteChoiceInt, arrivalChoiceDate, arrivalChoiceDate, departureChoiceDate, departureChoiceDate);
+		while(results.next()) {
+			Site site = mapToSiteRow(results);
+			sites.add(site);
+		}
+		return sites;	
+		
 	}
 	
 	private Site mapToSiteRow(SqlRowSet results) {
@@ -42,6 +57,7 @@ public class JDBCSiteDAO extends SiteDAO{
 		site.setUtilities(results.getBoolean("utilities"));
 		return site;
 	}
+
 	
 	
 
