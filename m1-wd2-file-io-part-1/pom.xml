@@ -2,13 +2,8 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.techelevator</groupId>
-<<<<<<< HEAD
-	<artifactId>file-io-part2-exercises</artifactId>
-	<version>1.0</version>
-=======
-	<artifactId>file-io-part2-exercises-pair</artifactId>
+	<artifactId>file-io-part1-exercises-pair</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
->>>>>>> 2e5f526f9b8e671e46217b96ce33458394a9c00d
 	<packaging>jar</packaging>
 	<dependencies>
 		<dependency>
