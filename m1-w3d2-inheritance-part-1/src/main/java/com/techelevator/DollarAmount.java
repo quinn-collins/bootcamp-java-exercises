@@ -1,6 +1,6 @@
 package com.techelevator;
 
-public class DollarAmount { //implement the 2 string method and do unit testing. every class implicity extends
+public class DollarAmount { 
 
     public static final DollarAmount ZERO_DOLLARS = new DollarAmount(0);
     
@@ -61,19 +61,19 @@ public class DollarAmount { //implement the 2 string method and do unit testing.
     
     @Override
     public boolean equals(Object obj) {
-        if(obj != null && obj instanceof DollarAmount) { //saying if its not null and is a dollar amount, then you can say the total amount below is equal
-            return this.totalAmountInCents == ((DollarAmount)obj).totalAmountInCents; //comparing what you see above to the total dollar amount
+        if(obj != null && obj instanceof DollarAmount) { 
+            return this.totalAmountInCents == ((DollarAmount)obj).totalAmountInCents; 
         } else {
             return false;
         }
     }
     
     @Override
-    public int hashCode() {//hash, how to order these things. need to return some integer that will uniquely identify this dollar amount.
+    public int hashCode() {
     	return totalAmountInCents;
     }
     
-//    new DollarAmount(3210).toString() new DollarAmount(1000).toString() → “$10.00” new DollarAmount(1).toString() → “$0.01”
+
     @Override
     public String toString() {
     	return "$" + getDollars() + "." + getCents();
