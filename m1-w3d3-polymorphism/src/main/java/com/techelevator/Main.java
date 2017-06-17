@@ -1,5 +1,6 @@
 package com.techelevator;
 
+<<<<<<< HEAD
 import java.util.Scanner;
 
 public class Main {
@@ -35,4 +36,21 @@ public class Main {
 			System.out.println();
 		}
 	}
+=======
+public class Main {
+
+	public static void main(String[] args) {
+		Worker[] workers = new Worker[] { new SalaryWorker("Steve", "Smith", 100000), new HourlyWorker("Jane", "Johnson", 15), new VolunteerWorker("Sarah", "Stephens") };
+		
+		for(Worker worker : workers) {
+			String firstName = worker.getFirstName();
+			String lastName = worker.getLastName();
+			double hoursWorked = (Math.random() * 45) + 25;
+			double weeklyPay = worker.calculateWeeklyPay(hoursWorked);
+			
+			System.out.println(String.format("%s, %s %f $%.02f", lastName, firstName, hoursWorked, weeklyPay));
+		}
+	}
+
+>>>>>>> dc2d9dec116b48f441e251a9d9cb8b364ceadbe4
 }
