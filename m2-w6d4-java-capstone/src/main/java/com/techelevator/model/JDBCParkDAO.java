@@ -17,7 +17,7 @@ public class JDBCParkDAO extends ParkDAO {
 	public ArrayList<Park> getAllParks() {
 		ArrayList<Park> parks = new ArrayList<>();
 		
-		String sqlGetAllParks = "SELECT park_id, name, location, establish_date, area, visitors, description FROM park";
+		String sqlGetAllParks = "SELECT park_id, name, location, establish_date, area, visitors, description FROM park ORDER BY name";
 		SqlRowSet results = jdbctemplate.queryForRowSet(sqlGetAllParks);
 		while(results.next()) {
 			Park park = mapToParkRow(results);
