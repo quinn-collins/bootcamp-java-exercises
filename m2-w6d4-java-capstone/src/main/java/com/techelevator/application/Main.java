@@ -1,17 +1,12 @@
 package com.techelevator.application;
 
-import java.util.ArrayList;
-
 import org.springframework.jdbc.core.JdbcTemplate;
-
 import com.techelevator.controller.CampgroundManager;
-import com.techelevator.model.Campground;
 import com.techelevator.model.Database;
 import com.techelevator.model.JDBCCampgroundDAO;
 import com.techelevator.model.JDBCParkDAO;
 import com.techelevator.model.JDBCReservationDAO;
 import com.techelevator.model.JDBCSiteDAO;
-import com.techelevator.model.Park;
 import com.techelevator.view.CampgroundCLI;
 import com.techelevator.view.Menu;
 
