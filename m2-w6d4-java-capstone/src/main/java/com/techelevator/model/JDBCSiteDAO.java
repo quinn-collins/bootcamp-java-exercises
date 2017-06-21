@@ -57,6 +57,34 @@ public class JDBCSiteDAO extends SiteDAO{
 		site.setUtilities(results.getBoolean("utilities"));
 		return site;
 	}
+	
+	private Site mapToSiteAvailable(SqlRowSet results) {
+		Site site = new Site();
+		site.setSite_id(results.getLong("site_id"));
+		site.setMax_occupency(results.getLong("max_occupancy"));
+		site.setMax_rv_length(results.getLong("max_rv_length"));
+		site.setUtilities(results.getBoolean("utilities"));
+		return site;
+	}
+
+
+	public ArrayList<Site> getAllReservationCampsite(long park_id, LocalDate arrivalChoiceDate,LocalDate departureChoiceDate) {
+ArrayList<Site> sites = new ArrayList<>();
+		
+		String sqlSitesByCampsite = "SELECT campground.name, site.site_number, site.max_occupancy, site.max_rv_length, site.utilities, campground.daily_fee "
+									+ "FROM site "
+									+ "JOIN campground On campground.campground_id = site.campground_id "
+									+ "WHERE campground.park_id = ? "
+									+ "AND site.site_id "
+									+ "NOT IN (SELECT site_id FROM reservation "
+									+ "WHERE (? BETWEEN from_date and to_date) OR (? BETWEEN from_date and to_date))";
+		SqlRowSet results = jdbctemplate.queryForRowSet(sqlSitesByCampsite, park_id, arrivalChoiceDate, departureChoiceDate);
+		while(results.next()) {
+			Site site = mapToSiteRow(results);
+			sites.add(site);
+		}
+		return sites;	
+	}
 
 	
 	

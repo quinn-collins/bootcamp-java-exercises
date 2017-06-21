@@ -1,16 +1,12 @@
 package com.techelevator.application;
 
-import java.util.ArrayList;
-
 import org.springframework.jdbc.core.JdbcTemplate;
-
 import com.techelevator.controller.CampgroundManager;
-import com.techelevator.model.Campground;
 import com.techelevator.model.Database;
 import com.techelevator.model.JDBCCampgroundDAO;
 import com.techelevator.model.JDBCParkDAO;
+import com.techelevator.model.JDBCReservationDAO;
 import com.techelevator.model.JDBCSiteDAO;
-import com.techelevator.model.Park;
 import com.techelevator.view.CampgroundCLI;
 import com.techelevator.view.Menu;
 
@@ -24,6 +20,7 @@ public class Main {
 	private static JDBCParkDAO JDBCpark;
 	private static JDBCCampgroundDAO JDBCcampground;
 	private static JDBCSiteDAO JDBCsite;
+	private static JDBCReservationDAO JDBCreservation;
 	
 	
 	public static void main(String[] args) {
@@ -34,9 +31,9 @@ public class Main {
 		JDBCpark = new JDBCParkDAO(jdbctemplate);
 		JDBCcampground = new JDBCCampgroundDAO(jdbctemplate);
 		JDBCsite = new JDBCSiteDAO(jdbctemplate);
+		JDBCreservation = new JDBCReservationDAO(jdbctemplate);
 		
-		
-		manager = new CampgroundManager(JDBCpark, JDBCcampground, JDBCsite);
+		manager = new CampgroundManager(JDBCpark, JDBCcampground, JDBCsite, JDBCreservation);
 		
 		
 		
