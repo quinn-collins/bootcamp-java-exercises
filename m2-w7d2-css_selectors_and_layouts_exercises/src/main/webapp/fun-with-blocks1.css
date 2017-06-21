@@ -1,0 +1,23 @@
+html {
+  font: 96px Courier;
+}
+
+.box {
+	background-color: green;
+	width: 100px;
+	text-align: center;
+	display: inline;
+}
+
+.even {
+	background-color: red;
+	display: block;
+}
+
+.odd {
+	display: block;
+}
+
+.layer {
+	
+}
