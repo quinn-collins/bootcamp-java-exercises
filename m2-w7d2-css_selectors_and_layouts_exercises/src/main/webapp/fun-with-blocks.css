@@ -2,22 +2,16 @@ html {
   font: 96px Courier;
 }
 
-.box {
+ .box {
 	background-color: green;
-	width: 100px;
-	text-align: center;
-	display: inline;
+	display: block;
 }
 
 .even {
 	background-color: red;
-	display: inline;
+	display: block;
 }
 
-.odd {
-	display: inline;
-}
-
-.layer {
+.layer { 
 	display: inline;
 }
