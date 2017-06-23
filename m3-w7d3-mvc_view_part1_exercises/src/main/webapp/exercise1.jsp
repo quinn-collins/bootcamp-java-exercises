@@ -41,6 +41,7 @@
 			 	<c:set var="fizzbuzzText" value="" />
 			 	<c:set var="fizzbuzzCss" value="" />
 			 	<c:choose>
+<<<<<<< HEAD
 			 		<c:when test="${count % 3 == 0 and count % 5 == 0}">
 			 			<c:set var="fizzbuzzText" value="FizzBuzz" />
 						<c:set var="fizzbuzzCss" value="fizzbuzz" />
@@ -63,6 +64,19 @@
 				</c:choose>
 				<li class="${fizzbuzzCss }">${fizzbuzzText }</li><li> 
 			</c:forEach>
+=======
+			 		<c:when test="${count % 3 ==0}">
+			 			<c:set var="fizzbuzzText" value="Fizz!" />
+				 		<c:set var="fizzbuzzCss" value="fizz" />
+			 		</c:when>
+				 	<c:otherwise>
+				 		<c:set var="fizzbuzzText" value="${count}" />
+					 	<c:set var="fizzbuzzCss" value="" />
+				 	</c:otherwise>
+			 	</c:choose>
+			 	<li class="${fizzbuzzCss}">${fizzbuzzText}</li>	
+			 </c:forEach>
+>>>>>>> f4456e3fe1f5cebbc0bfd08cbb20cf151536caea
 		</ul>
 	</body>
 </html>

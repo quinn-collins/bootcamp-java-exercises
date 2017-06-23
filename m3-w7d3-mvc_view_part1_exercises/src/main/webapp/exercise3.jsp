@@ -8,6 +8,9 @@
 			li {
 				list-style-type: none;
 			}
+			#word {
+				font-size: 100px;
+			}
 		</style>
 	</head>
 	<body>
@@ -24,7 +27,22 @@
 			 
 			See exercise3-echo.png for example output
 		 --%>
+		 
+		 
+		 
+			
+			
+			<c:set var = "word">word</c:set>
+			<c:forEach begin="0" end="20" step="1" var="count">
+				<li><c:out value="${word}"></c:out></li>
+			</c:forEach>
 		</ul>
+		
+		<%--
+			Need to decrease font size by 1 each time.. 1 what? pixel?
+			use css? declare string with java? use html? jsp?
+			can I put ${word} and decrement count?
+		 --%>
 		
 	</body>
 </html>
