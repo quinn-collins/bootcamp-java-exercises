@@ -30,11 +30,11 @@
 		 
 		 
 		 
+			<!--  What if there are no params? -->
 			
-			
-			<c:set var = "word">word</c:set>
-			<c:forEach begin="0" end="20" step="1" var="count">
-				<li><c:out value="${word}"></c:out></li>
+			<c:set var="word">word</c:set>
+			<c:forEach begin="0" end="${param.count}" step="1" var="i">
+				<li><span style="font-size: ${param.count - i}px"><c:out value="${param.word}"></c:out></span></li>
 			</c:forEach>
 		</ul>
 		
