@@ -23,7 +23,7 @@ public class WeightCalculatorController {
 		} else if(choosePlanet.equals("venus")) {
 			request.setAttribute("alienWeight", (weight/9.81)*8.87);
 		} else if(choosePlanet.equals("earth")) {
-			request.setAttribute("alienWeight", (weight/9.81)*9.81);
+			request.setAttribute("alienWeight", (weight));
 		} else if(choosePlanet.equals("mars")) {
 			request.setAttribute("alienWeight", (weight/9.81)*3.77);
 		} else if(choosePlanet.equals("jupiter")) {

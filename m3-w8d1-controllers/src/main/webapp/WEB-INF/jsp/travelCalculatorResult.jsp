@@ -4,7 +4,7 @@
 
 <section class="centeredPanel">
     <img src="img/${param.choosePlanet}.jpg"/>
-    <p>If you are ${param.earthWeight } lbs on planet Earth, you would weigh ${alienWeight } lbs on ${param.choosePlanet }.</p>
+    <p>Traveling by ${param.chooseTravelMethod } you will reach ${param.choosePlanet } in ${travelTime } years. You will be ${ageAfterTravel } years old.</p>
     
   
 </section>

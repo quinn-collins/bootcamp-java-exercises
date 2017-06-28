@@ -3,9 +3,9 @@
 <c:import url="/WEB-INF/jsp/common/header.jsp" />
 
 <section class="centeredPanel">
-  <h2>Alien Weight Calculator</h2>
+  <h2>Alien Age Calculator</h2>
     
-    <c:url var="formAction" value="/weightCalculatorResult"></c:url>
+    <c:url var="formAction" value="/ageCalculatorResult"></c:url>
     <form method="GET" action="${formAction }">
       <label for="choosePlanet">Choose A Planet</label>
       <select name="choosePlanet" id="choosePlanet">
@@ -15,16 +15,16 @@
         <option value="mars">Mars</option>
         <option value="jupiter">Jupiter</option>
         <option value="saturn">Saturn</option>
-        <option value="uranus">Uranus</option>
-        <option value="neptune">Neptune</option>
+        <option value="Uranus">Uranus</option>
+        <option value="Neptune">Neptune</option>
        </select>
        <br>
        <br>
-       <label for="earthWeight">Enter your Earth weight</label>
-        <input type="text" name="earthWeight">
+       <label for="earthAge">Enter Your Earth Age</label>
+        <input type="text" name="earthAge">
        <br>
        <br>
-       <input type="submit" value="Calculate Weight">
+       <input type="submit" value="Calculate Age">
        
     </form>
   
