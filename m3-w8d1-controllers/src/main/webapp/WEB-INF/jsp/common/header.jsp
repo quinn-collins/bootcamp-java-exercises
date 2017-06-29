@@ -25,6 +25,7 @@
         <ul>
             <li><a href="ageCalculatorInput">Alien Age</a></li>
             <li><a href="weightCalculatorInput">Alien Weight</a></li>
-            <li><a href="travelCalculatorInput">Drive Time</a></li>               
+            <li><a href="travelCalculatorInput">Drive Time</a></li>
+            <li><a href="spaceForumView">Space Forum</a></li>               
         </ul>
     </nav>
