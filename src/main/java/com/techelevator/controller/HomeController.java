@@ -21,7 +21,6 @@ public class HomeController {
 	ParkDao parkDao;
 	@Autowired
 	WeatherDao weatherDao;
-	
 
 	@RequestMapping(path="/", method=RequestMethod.GET)
 	public String displayIndex(HttpServletRequest request) {
@@ -32,10 +31,16 @@ public class HomeController {
 	
 	@RequestMapping(path="/details", method=RequestMethod.GET)
 	public String displayDetails(HttpServletRequest request) {
-		
 		String parkCode = request.getParameter("parkCode");
-		List<Weather> weather = (List<Weather>) weatherDao.getWeatherByParkCode(parkCode);
+		
+		//Get the parks
+		List<Park> parks = parkDao.getAllParks();
+		request.setAttribute("parks", parks);
+		
+		//Get the weather
+		List<Weather> weather = weatherDao.getWeatherByParkCode(parkCode);
 		request.setAttribute("weather", weather);
+		
 		return "details";
 	}
 	

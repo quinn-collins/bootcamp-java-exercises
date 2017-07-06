@@ -2,15 +2,19 @@
 <!DOCTYPE html>
 
 <c:import url="common/header.jsp"/>
-<c:forEach var="park" items="${parks }">
-	<c:url var="details" value="/details">
-		<c:param name="parkCode" value="${park.parkCode }" />
-	</c:url>
-		<img src=/m3-java-capstone/img/${park.parkCode}.png/>
+<c:forEach var="w" items="${weather }">
+<c:out value="${w.fiveDayForecastValue }"></c:out>
+<c:out value="${w.low }"></c:out>
+<c:out value="${w.high }"></c:out>
+<c:out value="${w.forecast }"></c:out>
+<hr>
+<br>
+</c:forEach>
 		<p>${park.parkName }</p>
 		<p>${park.parkDescription }</p>
 		<p>${park.parkName }</p>
-</c:forEach>
+
+
 	
 
 <c:import url="common/footer.jsp"/>
