@@ -34,8 +34,8 @@ public class HomeController {
 		String parkCode = request.getParameter("parkCode");
 		
 		//Get the parks
-		List<Park> parks = parkDao.getAllParks();
-		request.setAttribute("parks", parks);
+		Park park = parkDao.getParkByParkCode(parkCode);
+		request.setAttribute("park", park);
 		
 		//Get the weather
 		List<Weather> weather = weatherDao.getWeatherByParkCode(parkCode);
