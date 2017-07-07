@@ -49,7 +49,7 @@ public class JDBCWeatherDao implements WeatherDao {
 			weather.setFiveDayForecastValue(results.getInt("fiveDayForecastValue"));
 			weather.setLow(results.getInt("low"));
 			weather.setHigh(results.getInt("high"));
-			weather.setForecast(results.getString("high"));
+			weather.setForecast(results.getString("forecast"));
 			return weather;
 		}
 }
