@@ -8,5 +8,5 @@
 <br>
 <hr>
 <a href="/m3-java-capstone/">Home</a>
-<a href="/m3-java-capstone/">Survey</a>
+<a href="/m3-java-capstone/surveyInput">Survey</a>
 <hr>
