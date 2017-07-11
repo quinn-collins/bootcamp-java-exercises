@@ -13,6 +13,7 @@
             <BR>
             <INPUT TYPE="submit" VALUE="Submit">
         </FORM>
+        
         </div>
 <c:forEach var="park" items="${parks }">
 	<c:url var="detailsURL" value="/details">

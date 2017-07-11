@@ -2,11 +2,11 @@
 <!DOCTYPE html>
 
 <c:import url="common/header.jsp" />
-<c:url var="formAction" value="/favoritePark" />
+<c:url var="formAction" value="/surveyInput" />
 <form method="POST" action="${formAction}">
 
 	<label for="fPark">Favorite national Park</label> 
-	<select>
+	<select name = "fPark" id = "fPark">
 		<option value="cvnp">Cuyahoga Valley National Park</option>
 		<option value="enp">Everglades National Park</option>
 		<option value="gcnp">Grand Canyon National Park</option>
@@ -19,8 +19,10 @@
 		<option value="ynp2">Yosemite National Park</option>
 
 	</select><br> 
-	<label for="email">Your email:</label> 
-	<select>
+	<label for="email">Email Address</label>
+	<input type="text" name="email"><br>
+	<label for="state">State of Residence:</label> 
+	<select name="state" id="state">
 		<option value="AL">Alabama</option>
 		<option value="AK">Alaska</option>
 		<option value="AZ">Arizona</option>
@@ -73,6 +75,15 @@
 		<option value="WI">Wisconsin</option>
 		<option value="WY">Wyoming</option>
 	</select>
-
+	<br>
+	<label for="activity">Activity Level: </label>
+	<input type="radio" name="activity" value="inactive">Inactive
+	<input type="radio" name="activity" value="sedentary">Sedentary
+	<input type="radio" name="activity" value="active">Active
+	<input type="radio" name="activity" value="xActive">Extremely Active<br>
+	
+	
+	<input type="submit" value="Submit">
+	
 </form>
 <c:import url="common/footer.jsp" />

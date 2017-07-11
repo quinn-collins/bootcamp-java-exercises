@@ -61,7 +61,7 @@ public class JDBCParkDao implements ParkDao {
 		Park park = null;
 		String sqlGetParkByParkCode = "SELECT * FROM park WHERE parkCode = ?";
 		
-		SqlRowSet results = jdbcTemplate.queryForRowSet(sqlGetParkByParkCode, parkCode);
+		SqlRowSet results = jdbcTemplate.queryForRowSet(sqlGetParkByParkCode, parkCode.toUpperCase());
 		if(results.next()){
 			park = mapRowToPark(results);
 		}

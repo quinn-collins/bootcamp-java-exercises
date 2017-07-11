@@ -1,5 +1,6 @@
 package com.techelevator.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -55,19 +56,36 @@ public class HomeController {
 		request.setAttribute("surv", surveyList);
 		return "surveyInput";
 	}
-	@RequestMapping(path="/surveyResult", method=RequestMethod.POST)
-	public String processSurveyResult(@RequestParam int surveyId,
-									  @RequestParam String parkName,
-									  @RequestParam String emailAddress,
-									  @RequestParam String state,
-									  @RequestParam String activityLevel){
-		Survey survey = new Survey();
-		survey.setSurveyId(surveyId);
-		survey.setEmailAddress(emailAddress);
-		survey.setState(state);
-		survey.setActivityLevel(activityLevel);
-		
+	@RequestMapping(path="/surveyResult", method=RequestMethod.GET)
+	public String displaySurveyResult(HttpServletRequest request){
+		List<Park> parksList = new ArrayList<>();
+		List<Survey> surveyList = surveyDao.getAllSurvey();
+		for(Survey survey : surveyList) {
+			parksList.add(parkDao.getParkByParkCode(survey.getParkCode()));
+		}
+		request.setAttribute("parkList", parksList);
+		request.setAttribute("surveyList", surveyList);
 		return "surveyResult";
+	}
+	@RequestMapping(path="/", method=RequestMethod.POST)
+	public String processIndex(HttpServletRequest request){
+		return "redirect:/";
+	}
+	@RequestMapping(path="/surveyInput", method=RequestMethod.POST)
+	public String processSurveyInputt(HttpServletRequest request){
+		String fPark = request.getParameter("fPark");
+		String email = request.getParameter("email");
+		String state = request.getParameter("state");
+		String activity = request.getParameter("activity");
+		Survey survey = new Survey();
+		survey.setParkCode(fPark);
+		survey.setEmailAddress(email);
+		survey.setState(state);
+		survey.setActivityLevel(activity);
+		
+		surveyDao.save(survey);
+		
+		return "redirect:/surveyResult";
 	}
 	
 	
