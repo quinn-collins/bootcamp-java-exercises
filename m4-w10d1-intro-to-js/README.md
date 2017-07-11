@@ -9,7 +9,7 @@ For each exercise, create the function and implement it inside of `exercises.js`
 		sumDouble(1, 2) → 3
 		sumDouble(3, 2) → 5
 		sumDouble(2, 2) → 8
-				
+
 		function sumDouble(x, y) {
 			// do logic here
 			// return result;
@@ -39,6 +39,12 @@ For each exercise, create the function and implement it inside of `exercises.js`
 		middleThree("Candy") → "and"
 		middleThree("and") → "and"
 		middleThree("solving") → "lvi"
+
+length = 3 start at 0
+length = 5 start at 1
+length = 7 start at 2
+length = 9 start at 3
+there is a pattern here I want to code
 
 6. **FrontAgain** Given a string, return true if the first 2 chars in the string also appear at the end of the string, such as with "edited".
 
@@ -74,14 +80,14 @@ For each exercise, create the function and implement it inside of `exercises.js`
 		cigarParty(50, false) → true
 		cigarParty(70, true) → true
 
-12. **StringSplosion** Write a function that given a non-empty string like "Code" returns a string like "CCoCodCode". 
+12. **StringSplosion** Write a function that given a non-empty string like "Code" returns a string like "CCoCodCode".
 
 		stringSplosion("Code") → "CCoCodCode"
 		stringSplosion("supercalifragilisticexpialidocious") → "ssusupsupesupersupercsupercasupercalsupercalisupercalifsupercalifrsupercalifrasupercalifragsupercalifragisupercalifragilsupercalifragilisupercalifragilissupercalifragilistsupercalifragilistisupercalifragilisticsupercalifragilisticesupercalifragilisticexsupercalifragilisticexpsupercalifragilisticexpisupercalifragilisticexpiasupercalifragilisticexpialsupercalifragilisticexpialisupercalifragilisticexpialidsupercalifragilisticexpialidosupercalifragilisticexpialidocsupercalifragilisticexpialidocisupercalifragilisticexpialidociosupercalifragilisticexpialidociousupercalifragilisticexpialidocious"
 
-13. **FizzBuzz** Because you know you can't live without it, FizzBuzz. 
-	
-		
+13. **FizzBuzz** Because you know you can't live without it, FizzBuzz.
+
+
 		fizzBuzz(3) → "Fizz"
 		fizzBuzz(1) → 1
 		fizzBuzz(10) → "Buzz"
@@ -103,15 +109,15 @@ For each exercise, create the function and implement it inside of `exercises.js`
 
 15. **ReverseArray** Write an function that accepts an array of integer values, and display them in the reverse order they appeared in the array. One obvious solution is to simply loop through the integer array in reserve order, but see if you can come up with an alternative.
 
-		reverseArray([1, 99, 43, 2, 55, 78, 99, 2345, 438, 2, 99, 107]) → 
+		reverseArray([1, 99, 43, 2, 55, 78, 99, 2345, 438, 2, 99, 107]) →
 		1 99 43 2 55 78 2345 438 107
 
-16. **BlackJack** Write a function that given 2 int values greater than 0, returns whichever value is nearest to 21 without going over. Return 0 if they both go over. 
+16. **BlackJack** Write a function that given 2 int values greater than 0, returns whichever value is nearest to 21 without going over. Return 0 if they both go over.
 
 		blackjack(19, 21) → 21
 		blackjack(21, 19) → 21
 		blackjack(19, 22) → 19
-		
+
 ## Challenge Exercises
 
 1. **IQTest** Bob is preparing to pass an IQ test. The most frequent task in this test is to find out which one of the given numbers differs from the others. Bob observed that one number usually differs from the others in evenness. Help Bob — to check his answers, he needs a program that among the given numbers finds one that is different in evenness, and return the position of this number. _Keep in mind that your task is to help Bob solve a real IQ test, which means indexes of the elements start from 1 (not 0)_
@@ -139,4 +145,3 @@ For each exercise, create the function and implement it inside of `exercises.js`
 		findNextSquare(121) → 144
 		findNextSquare(625) → 676
 		findNextSquare(114) → -1 // 114 is not a perfect square
-
