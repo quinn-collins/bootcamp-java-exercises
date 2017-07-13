@@ -8,9 +8,8 @@
 		<c:url var="productDetailURL" value="/spaceStoreDetailView">
 			<c:param name="productId" value="${product.id }" />
 		</c:url>
-		<a href="${productDetailURL }"> <c:url
-				value="img/${product.imageName }" var="productURL" /> <img
-			src="${productURL}" />
+		<a href="${productDetailURL }"> 
+		<c:urlvalue="img/${product.imageName }" var="productURL" /> <img src="${productURL}" />
 		</a>
 		<p>${product.name }</p>
 		<p>${product.price }</p>
