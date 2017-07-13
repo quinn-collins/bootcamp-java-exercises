@@ -21,13 +21,13 @@ public class colorizedNameController {
 		String blue = request.getParameter("blue");
 		String green = request.getParameter("green");
 		
-		if(!red.isEmpty() && !red.equals(null)){
+		if(red !=null && !red.isEmpty()){
 			request.setAttribute("redName", firstName + " " + lastName);
 		}
-		if(!blue.isEmpty() && !blue.equals(null)){
+		if(blue !=null && !blue.isEmpty()){
 			request.setAttribute("blueName", firstName + " " + lastName);
 		}
-		if(!green.isEmpty() && !green.equals(null)){
+		if(green !=null && !green.isEmpty()){
 			request.setAttribute("greenName", firstName + " " + lastName);
 		}
 		return "colorizedNameResult";
